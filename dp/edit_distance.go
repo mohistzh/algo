@@ -32,6 +32,27 @@ func EditDistanceByTabulation(a string, b string) int {
 	return dp[m][n]
 
 }
+
+// Recursively solution
+func EditDistanceByRecursion(a string, b string, m int, n int) int {
+	// base cases
+	if m == 0 {
+		return n
+	}
+	if n == 0 {
+		return m
+	}
+	// if the characters are the same, just skip it
+	if a[m-1] == b[n-1] {
+		return EditDistanceByRecursion(a, b, m-1, n-1)
+	}
+	return min(
+		EditDistanceByRecursion(a, b, m, n-1),   // insertion
+		EditDistanceByRecursion(a, b, m-1, n),   // deletion
+		EditDistanceByRecursion(a, b, m-1, n-1), //substitution
+	) + 1
+
+}
 func min(x int, y int, z int) int {
 	if x <= y && x <= z {
 		return x
@@ -45,6 +66,11 @@ func min(x int, y int, z int) int {
 func main() {
 	a, b := "sunday", "saturday"
 	distance := EditDistanceByTabulation(a, b)
-	fmt.Printf("String '%v' and String '%v' \n", a, b)
+	fmt.Printf("DP with tabulation solution. String '%v' and String '%v' \n", a, b)
 	fmt.Println("Their edit distance is:", distance)
+	fmt.Println()
+	distance = EditDistanceByRecursion(a, b, len(a), len(b))
+	fmt.Printf("DP with recursively solution. String '%v' and String '%v' \n", a, b)
+	fmt.Println("Their edit distance is:", distance)
+
 }
