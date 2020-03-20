@@ -1,7 +1,7 @@
 package main
 
 /*
-	Edit distance problem
+	Edit distance problem, refer https://en.wikipedia.org/wiki/Edit_distance
 */
 import (
 	"fmt"
