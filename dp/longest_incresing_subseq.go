@@ -8,6 +8,7 @@ import (
 	Longest incresing subsequence, refer https://en.wikipedia.org/wiki/Longest_increasing_subsequence
 */
 
+// O(N log N) time complexity
 func LongestIncresingSubSequenceByDP(input []int) int {
 	n := len(input)
 	if n <= 0 {

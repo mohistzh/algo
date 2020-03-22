@@ -23,6 +23,7 @@ func LongestCommonSubSequenceNaive(a string, b string, m int, n int) int {
 	}
 }
 
+// O(mn) time complexity
 func LongestCommonSubSequenceDP(a string, b string) int {
 	m, n := len(a), len(b)
 	if m == 0 || n == 0 {
