@@ -1,7 +1,7 @@
 package main
 
 /*
- Longest common subsequence
+ Longest common subsequence, refer https://en.wikipedia.org/wiki/Longest_common_subsequence_problem
 */
 import (
 	"fmt"
@@ -21,6 +21,29 @@ func LongestCommonSubSequenceNaive(a string, b string, m int, n int) int {
 			LongestCommonSubSequenceNaive(a, b, m-1, n),
 		)
 	}
+}
+
+func LongestCommonSubSequenceDP(a string, b string) int {
+	m, n := len(a), len(b)
+	if m == 0 || n == 0 {
+		return 0
+	}
+	dp := make([][]int, m+1)
+	for i := 0; i <= m; i++ {
+		dp[i] = make([]int, n+1)
+	}
+	for i := 0; i <= m; i++ {
+		for j := 0; j <= n; j++ {
+			if i == 0 || j == 0 {
+				dp[i][j] = 0
+			} else if a[i-1] == b[j-1] {
+				dp[i][j] = dp[i-1][j-1] + 1
+			} else {
+				dp[i][j] = max(dp[i-1][j], dp[i][j-1])
+			}
+		}
+	}
+	return dp[m][n]
 
 }
 func max(x int, y int) int {
@@ -33,5 +56,6 @@ func max(x int, y int) int {
 
 func main() {
 	a, b := "AGGTAB", "GXTXAYB"
-	fmt.Println(LongestCommonSubSequenceNaive(a, b, len(a), len(b)))
+	fmt.Println("Naive solution: ", LongestCommonSubSequenceNaive(a, b, len(a), len(b)))
+	fmt.Println("DP solution: ", LongestCommonSubSequenceDP(a, b))
 }
