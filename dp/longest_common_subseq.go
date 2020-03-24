@@ -44,6 +44,7 @@ func LongestCommonSubSequenceDP(a string, b string) int {
 			}
 		}
 	}
+	fmt.Println(dp)
 	return dp[m][n]
 
 }
