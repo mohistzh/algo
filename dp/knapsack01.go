@@ -37,6 +37,7 @@ func KnapsackDPSolution(capacity int, weight []int, value []int, n int) int {
 
 		}
 	}
+	fmt.Println(dp)
 	return dp[n][capacity]
 
 }
