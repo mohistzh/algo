@@ -14,7 +14,7 @@ func LongestSubStringKDistinct(str string, k int) int {
 	res, windowStart := 0.0, 0
 	for windowEnd := 0; windowEnd < len(str); windowEnd++ {
 		rightChart := str[windowEnd]
-		if _, ok := frequency[rightChart]; ok {
+		if _, ok := frequency[rightChart]; !ok {
 			frequency[rightChart] = 0
 		}
 		frequency[rightChart]++
