@@ -7,7 +7,7 @@
 
 [**Sliding Window**](https://github.com/mohistzh/algo/tree/master/slidewindow)
 
-**Two Pointers**
+[**Two Pointers**](https://github.com/mohistzh/algo/tree/master/twopointers)
 
 **Merge Intervals**
 
