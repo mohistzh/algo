@@ -7,7 +7,6 @@ import (
 /*
 	Given an array of sorted numbers and a target sum, find a pair in the array whose sum is equal to the given target.
 */
-// because it's a two pointer practicing case, we don't use a hashmap approach
 func findPairWithTargetSum(input []int, targetSum int) []int {
 	result := []int{-1, -1}
 	left, right := 0, len(input)-1
@@ -26,7 +25,25 @@ func findPairWithTargetSum(input []int, targetSum int) []int {
 	return result
 }
 
+// hashmap approach
+func findPairWithTargetSumUsingHashMap(input []int, targetSum int) []int {
+	indicesMap := make(map[int]int)
+	result := []int{-1, -1}
+	for i, num := range input {
+		if _, ok := indicesMap[targetSum-num]; ok {
+			result[0] = indicesMap[targetSum-num]
+			result[1] = i
+			break
+		} else {
+			indicesMap[num] = i
+		}
+	}
+	return result
+}
+
 func main() {
 	fmt.Println(findPairWithTargetSum([]int{1, 2, 3, 4, 6}, 6))
 	fmt.Println(findPairWithTargetSum([]int{2, 5, 9, 11}, 11))
+	fmt.Println(findPairWithTargetSumUsingHashMap([]int{1, 2, 3, 4, 6}, 6))
+	fmt.Println(findPairWithTargetSumUsingHashMap([]int{2, 5, 9, 11}, 11))
 }
