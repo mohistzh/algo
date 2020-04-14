@@ -26,11 +26,10 @@ func minimumWindowSubString(input string, pattern string) string {
 		rightChar := input[windowEnd]
 		if _, ok := letterNeededMap[rightChar]; ok {
 			letterSeenMap[rightChar]++
-			if letterNeededMap[rightChar] == letterSeenMap[rightChar] {
+			if letterNeededMap[rightChar] >= letterSeenMap[rightChar] {
 				letterMissing--
 			}
 		}
-
 		for letterMissing == 0 {
 			if (windowEnd - windowStart) < (window[1] - window[0]) {
 				window[0] = windowStart
@@ -54,4 +53,5 @@ func minimumWindowSubString(input string, pattern string) string {
 }
 func main() {
 	fmt.Println("Minimum window in 'ADOBECODEBANC' contains all characters in 'ABC':", minimumWindowSubString("ADOBECODEBANC", "ABC"))
+	fmt.Println("Minimum window in 'aa' contains all characters in 'aa':", minimumWindowSubString("aa", "aa"))
 }
