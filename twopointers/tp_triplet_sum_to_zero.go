@@ -23,6 +23,7 @@ func FindTriplets(input []int) [][]int {
 	return triplets
 }
 
+// x + y + z = 0 equals to y + z == -x
 func searchTriplets(input []int, targetSum int, left int, triplets *[][]int) {
 	right := len(input) - 1
 	for left < right {
@@ -48,5 +49,5 @@ func searchTriplets(input []int, targetSum int, left int, triplets *[][]int) {
 }
 
 func main() {
-	fmt.Println("Unique triplets in it that add up to zero:", FindTriplets([]int{-3, 0, 1, 2, -1, 1, -2}))
+	fmt.Println("Unique triplets in unsorted numbers that add up to zero:", FindTriplets([]int{-3, 0, 1, 2, -1, 1, -2}))
 }
