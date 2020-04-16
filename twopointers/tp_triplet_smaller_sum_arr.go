@@ -9,12 +9,13 @@ import (
 Given an array arr of unsorted numbers and a target sum, count all triplets in it such that arr[i] + arr[j] + arr[k] < target where i, j, and k are three different indices.
  Write a function to return the list of all such triplets instead of the count.
 */
+// Overall time complexity is O(N * LogN + N^3)
 func tripletWithSmallerSumArr(input []int, targetSum int) [][]int {
-	sort.Ints(input)
+	sort.Ints(input) // sorting the array will take O(N * LogN)
 	var triplets [][]int
 	for i := 0; i < len(input)-2; i++ {
 		// X + Y + Z < TargetSum == Y + Z == TargetSum - X
-		fillinTriplet(input, targetSum-input[i], i, &triplets)
+		fillinTriplet(input, targetSum-input[i], i, &triplets) // O(N^3) three loops
 	}
 	return triplets
 }
