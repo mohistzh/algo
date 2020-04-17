@@ -9,6 +9,8 @@
 
 [**Two Pointers**](https://github.com/mohistzh/algo/tree/master/twopointers)
 
+[**Fast & Slow Pointers**](https://github.com/mohistzh/algo/tree/master/fastslowpointers)
+
 **Merge Intervals**
 
 **Cyclic Sort**
