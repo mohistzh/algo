@@ -10,18 +10,30 @@ type SinglyNode struct {
 	next  *SinglyNode
 }
 
-// hasCycle super easy question, fast and slow pointers pattern
-func hasCycle(head *SinglyNode) bool {
-	slow := head
-	fast := head.next
+// Given the head of a LinkedList with a cycle, find the length of the cycle.
+func findLengthOfCycle(head *SinglyNode) int {
+	slow, fast := head, head.next
 	for fast != nil && fast.next != nil {
 		if slow.value == fast.value {
-			return true
+			return findLength(slow)
 		}
 		slow = slow.next
 		fast = fast.next.next
 	}
-	return false
+	return -1
+}
+
+func findLength(slow *SinglyNode) int {
+	current := slow
+	length := 0
+	for {
+		current = current.next
+		length++
+		if current.value == slow.value {
+			break
+		}
+	}
+	return length
 }
 
 func main() {
@@ -31,9 +43,9 @@ func main() {
 	head.next.next.next = &SinglyNode{value: 4}
 	head.next.next.next.next = &SinglyNode{value: 5}
 	head.next.next.next.next.next = &SinglyNode{value: 6}
-	fmt.Println("LinkedList has cycle:", hasCycle(&head))
+	fmt.Println("LinkedList cycle length:", findLengthOfCycle(&head))
 	head.next.next.next.next.next.next = head.next.next
-	fmt.Println("LinkedList has cycle:", hasCycle(&head))
+	fmt.Println("LinkedList cycle length:", findLengthOfCycle(&head))
 	head.next.next.next.next.next.next = head.next.next.next
-	fmt.Println("LinkedList has cycle:", hasCycle(&head))
+	fmt.Println("LinkedList cycle length:", findLengthOfCycle(&head))
 }
