@@ -11,7 +11,7 @@
 
 [**Fast & Slow Pointers**](https://github.com/mohistzh/algo/tree/master/fastslowpointers)
 
-**Merge Intervals**
+[**Merge Intervals**](https://github.com/mohistzh/algo/tree/master/mergeintervals)
 
 **Cyclic Sort**
 
