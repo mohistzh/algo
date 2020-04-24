@@ -38,6 +38,10 @@ func rearrangeLinkedList(head *SinglyNode) {
 	if firstHalfHead != nil {
 		firstHalfHead.next = nil
 	}
+	printSinglyLinkedList(head)
+}
+
+func printSinglyLinkedList(head *SinglyNode) {
 	temp := head
 	for temp != nil {
 		fmt.Print(temp.value, " -> ")
