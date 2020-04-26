@@ -9,7 +9,7 @@ import (
 // Node doublely LinkedList Node
 type Node struct {
 	Key, Value generic.Type
-	next, prev *Node
+	Next, Prev *Node
 }
 
 // LRUCache structure
@@ -27,8 +27,8 @@ func Constructor(capacity int) LRUCache {
 		Head:     &Node{},
 		Tail:     &Node{},
 	}
-	lruCache.Head.next = lruCache.Tail
-	lruCache.Tail.prev = lruCache.Head
+	lruCache.Head.Next = lruCache.Tail
+	lruCache.Tail.Prev = lruCache.Head
 	return lruCache
 }
 
@@ -43,14 +43,14 @@ func (lruCache *LRUCache) Get(key generic.Type) generic.Type {
 	return node
 }
 func (lruCache *LRUCache) removeNode(node *Node) {
-	node.prev.next = node.next
-	node.next.prev = node.prev
+	node.Prev.Next = node.Next
+	node.Next.Prev = node.Prev
 }
 func (lruCache *LRUCache) setHeadNode(node *Node) {
-	lruCache.Head.prev = node
-	node.next = lruCache.Head.next
-	lruCache.Head.next = node
-	node.prev = lruCache.Head
+	lruCache.Head.Prev = node
+	node.Next = lruCache.Head.Next
+	lruCache.Head.Next = node
+	node.Prev = lruCache.Head
 }
 
 // Put add new data
@@ -60,8 +60,8 @@ func (lruCache *LRUCache) Put(key generic.Type, value generic.Type) {
 		lruCache.removeNode(node)
 	} else {
 		if len(lruCache.Map) == lruCache.Capacity {
-			delete(lruCache.Map, lruCache.Tail.prev.Key)
-			lruCache.removeNode(lruCache.Tail.prev)
+			delete(lruCache.Map, lruCache.Tail.Prev.Key)
+			lruCache.removeNode(lruCache.Tail.Prev)
 		}
 		node = &Node{Key: key, Value: value}
 		lruCache.Map[node.Key] = node
@@ -69,11 +69,13 @@ func (lruCache *LRUCache) Put(key generic.Type, value generic.Type) {
 	node.Value = value
 	lruCache.setHeadNode(node)
 }
+
+// Print print node list
 func (lruCache *LRUCache) Print() {
 	head := lruCache.Head
-	for head != nil && head.next != nil {
+	for head != nil && head.Next != nil {
 		fmt.Print("key:", head.Key, " value: ", head.Value)
-		head = head.next
+		head = head.Next
 	}
 }
 
