@@ -33,14 +33,14 @@ type LRUCache struct {
 func Constructor(capacity int) LRUCache {
 	lruCache := LRUCache{
 		Capacity: capacity,
-		Store:    make(map[generic.Type]*Node, capacity),
+		Store:    make(map[generic.Type]*Node),
 		Head:     &Node{},
 		Tail:     &Node{},
 	}
-	// default states
 	lruCache.Head.Next = lruCache.Tail
 	lruCache.Tail.Prev = lruCache.Head
-
+	lruCache.Head.Prev = nil
+	lruCache.Tail.Next = nil
 	return lruCache
 }
 
@@ -51,57 +51,62 @@ func (lruCache *LRUCache) Get(key generic.Type) generic.Type {
 		return nil
 	}
 	//refresh node position
+	ans := node.Value
 	lruCache.removeNode(node)
 	lruCache.setHead(node)
 
-	return node
-}
-
-// removeNode remove the given node
-func (lruCache *LRUCache) removeNode(node *Node) {
-	node.Prev.Next = node.Next
-	node.Next.Prev = node.Prev
-}
-
-// setHead reset head node
-func (lruCache *LRUCache) setHead(node *Node) {
-	lruCache.Head.Prev = node
-	node.Next = lruCache.Head.Next
-	lruCache.Head.Next = node
-	node.Prev = lruCache.Head
-}
-
-// ensureCapacity calling it when cache data is going to exceeded the lurcache capacity
-func (lruCache *LRUCache) ensureCapacity() {
-	if len(lruCache.Store) == lruCache.Capacity {
-		delete(lruCache.Store, lruCache.Tail.Prev.Key) // Delete the last item of the Store
-		newLast := lruCache.Tail.Prev.Prev
-		lruCache.removeNode(lruCache.Tail.Prev)
-		lruCache.Tail.Prev = newLast
-		newLast.Next = lruCache.Tail
-	}
+	return ans
 }
 
 // Put add new data
 func (lruCache *LRUCache) Put(key generic.Type, value generic.Type) {
 	node, ok := lruCache.Store[key]
 	if ok {
-		lruCache.removeNode(node)
 		node.Value = value
+		lruCache.removeNode(node)
+		lruCache.setHead(node)
 	} else {
-		lruCache.ensureCapacity()
 		node = &Node{Key: key, Value: value}
 		lruCache.Store[key] = node
+		if len(lruCache.Store) < lruCache.Capacity {
+			lruCache.setHead(node)
+		} else {
+			delete(lruCache.Store, lruCache.Tail.Prev.Key)
+			lruCache.removeNode(lruCache.Tail.Prev)
+			lruCache.setHead(node)
+		}
+
 	}
-	lruCache.setHead(node)
+}
+
+// removeNode remove the given node
+func (lruCache *LRUCache) removeNode(node *Node) {
+	node.Prev.Next = node.Next
+	node.Next.Prev = node.Prev
+
+}
+
+// setHead reset head node
+func (lruCache *LRUCache) setHead(node *Node) {
+	if lruCache.Head == nil {
+		lruCache.Tail = node
+	} else {
+		lruCache.Head.Prev = node
+		node.Next = lruCache.Head
+		node.Prev = nil
+	}
+	lruCache.Head = node
 
 }
 
 // Print print node list
 func (lruCache *LRUCache) Print() {
-	head := lruCache.Head.Next
-	for head != nil && head.Next != nil {
-		fmt.Print("key:", head.Key, " value:", head.Value)
+	fmt.Println("---------------")
+	fmt.Println("Store size:", len(lruCache.Store), " Store capacity:", lruCache.Capacity)
+	fmt.Println(lruCache.Store)
+	head := lruCache.Head
+	for head != nil && head.Key != nil {
+		fmt.Print(head.Key, " -> ", head.Value)
 		fmt.Println()
 		head = head.Next
 	}
@@ -109,15 +114,16 @@ func (lruCache *LRUCache) Print() {
 }
 
 func main() {
-	lru := Constructor(5)
-	lru.Put("hello", "world")
-	lru.Put(2, 3)
-	lru.Put(2.2, 3.3)
-	lru.Put(4, "test")
-	lru.Put(9, "888")
+	lru := Constructor(2)
+	lru.Put(1, 1)
+	lru.Put(2, 2)
+	fmt.Println(lru.Get(1), " ")
+	lru.Put(3, 3)
+	fmt.Println(lru.Get(2), " ")
+	lru.Put(4, 4)
+	fmt.Println(lru.Get(1), " ")
+	fmt.Println(lru.Get(3), " ")
+
+	fmt.Println(lru.Get(4), " ")
 	lru.Print()
-	fmt.Println(lru.Get("Get"))
-	fmt.Println(lru.Get("hello"))
-	fmt.Println(lru.Get(4))
-	lru.Put(8, 88)
 }
