@@ -7,6 +7,7 @@ import (
 /*
  Given an array of intervals representing 'N' appointments, find out if a person can attend all the appointments.
 */
+// Besides this solution, we can sort the appointments array by start(0) first, then just iterate through the array once to detect if there is a overlap exists.
 func attendAllAppointments(appointments [][]int) bool {
 	const start, end = 0, 1
 	// i, j
