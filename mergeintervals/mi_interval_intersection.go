@@ -31,8 +31,36 @@ func intervalIntersection(intervalsA [][]int, intervalsB [][]int) [][]int {
 	}
 	return intervalsC
 }
+func intervalIntersectionSolution2(intervalA [][]int, intervalB [][]int) [][]int {
+	var intervalC [][]int
+	indexA, indexB := 0, 0 // index of original interval array
+	const start, end = 0, 1
+	for indexA < len(intervalA) && indexB < len(intervalB) {
+		// check if intervals overlap and intervalA startime lies within the other intervalB, vice versa
+		isAOverlapsB := intervalA[indexA][start] >= intervalB[indexB][start] && intervalA[indexA][start] <= intervalB[indexB][end]
+		isBOverlapsA := intervalB[indexB][start] >= intervalA[indexA][start] && intervalB[indexB][start] <= intervalA[indexA][end]
+
+		if isAOverlapsB || isBOverlapsA {
+			// intersection part
+			maxStart := math.Max(float64(intervalA[indexA][start]), float64(intervalB[indexB][start]))
+			minEnd := math.Min(float64(intervalA[indexA][end]), float64(intervalB[indexB][end]))
+			intervalC = append(intervalC, []int{int(maxStart), int(minEnd)})
+		}
+		// move next from the interval which is finishing first
+		if intervalA[indexA][end] < intervalB[indexB][end] {
+			indexA++
+		} else {
+			indexB++
+		}
+	}
+	return intervalC
+
+}
 
 func main() {
 	fmt.Println(intervalIntersection([][]int{{1, 3}, {5, 6}, {7, 9}}, [][]int{{2, 3}, {5, 7}}))
 	fmt.Println(intervalIntersection([][]int{{1, 3}, {5, 7}, {9, 12}}, [][]int{{5, 10}}))
+	fmt.Println("Second solution")
+	fmt.Println(intervalIntersectionSolution2([][]int{{1, 3}, {5, 6}, {7, 9}}, [][]int{{2, 3}, {5, 7}}))
+	fmt.Println(intervalIntersectionSolution2([][]int{{1, 3}, {5, 7}, {9, 12}}, [][]int{{5, 10}}))
 }
