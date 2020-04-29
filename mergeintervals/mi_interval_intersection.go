@@ -13,6 +13,7 @@ import (
 	Output: [2, 3], [5, 6], [7, 7]
 	Explanation: The output list contains the common intervals between the two lists.
 */
+// O(N*M)
 func intervalIntersection(intervalsA [][]int, intervalsB [][]int) [][]int {
 	// c.start = max(a.start, b.start) c.end = min(a.end, b.end) if c.end < c.start then skip
 	var intervalsC [][]int
@@ -31,6 +32,8 @@ func intervalIntersection(intervalsA [][]int, intervalsB [][]int) [][]int {
 	}
 	return intervalsC
 }
+
+// O(N+M)
 func intervalIntersectionSolution2(intervalA [][]int, intervalB [][]int) [][]int {
 	var intervalC [][]int
 	indexA, indexB := 0, 0 // index of original interval array
