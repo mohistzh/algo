@@ -23,6 +23,8 @@ Explanation: Since [1, 4] and [2, 5] overlap, we need two rooms to hold these tw
 
 func minimumMeetingRooms(meetings [][]int) int {
 	sortMeetings(meetings)
+	minRooms := 0
+	//
 	fmt.Println(meetings)
 	return -1
 }
