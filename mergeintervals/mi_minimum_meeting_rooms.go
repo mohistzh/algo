@@ -33,7 +33,7 @@ func minimumMeetingRooms(meetingRooms [][]int) int {
 
 func main() {
 	fmt.Println(minimumMeetingRooms([][]int{{1, 4}, {2, 5}, {7, 9}}))
-	fmt.Println(minimumMeetingRooms([][]int{{6, 7}, {2, 4}, {8, 12}}))
+	fmt.Println(minimumMeetingRooms([][]int{{2, 4}, {6, 7}, {8, 12}}))
 	fmt.Println(minimumMeetingRooms([][]int{{1, 4}, {2, 3}, {3, 6}}))
-	fmt.Println(minimumMeetingRooms([][]int{{4, 5}, {2, 3}, {2, 4}, {3, 5}}))
+	fmt.Println(minimumMeetingRooms([][]int{{2, 3}, {2, 4}, {3, 5}, {4, 5}}))
 }
