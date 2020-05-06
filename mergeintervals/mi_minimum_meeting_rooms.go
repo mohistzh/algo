@@ -11,6 +11,21 @@ type Meeting struct {
 	end   int
 }
 
+// MinHeap to find out the smallest meeting end time
+type MinHeap []int
+
+func (mh MinHeap) Len() int {
+	return len(mh)
+}
+
+func (mh MinHeap) Less(i, j int) bool {
+	return mh[i] < mh[j]
+}
+
+func (mh MinHeap) Swap(i, j int) {
+	mh[i], mh[j] = mh[j], mh[i]
+}
+
 /*
 Given a list of intervals representing the start and end time of 'N' meetings.
 find the minimum number of rooms required to hold all the meetings.
