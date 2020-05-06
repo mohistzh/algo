@@ -59,6 +59,11 @@ Meetings: [[1, 4], [2, 5], [7, 9]]
 Output: 2
 Explanation: Since [1, 4] and [2, 5] overlap, we need two rooms to hold these two meetings.
 [7, 9] can occur in any of the two rooms later.
+
+Similar problems:
+1. Given a list of intervals, find the point where the maximum number of intervals overlap.
+2. Given a list of intervals representing the arrival and departure times of trains to a train station,
+	our goal is to find the minimum number of platforms required for the train station so that no train has to wait.
 */
 
 func minimumMeetingRooms(meetings [][]int) int {
