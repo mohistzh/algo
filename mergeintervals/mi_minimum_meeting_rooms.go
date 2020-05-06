@@ -1,25 +1,24 @@
 package main
 
 import (
+	"container/heap"
 	"fmt"
+	"math"
 	"sort"
 )
 
-// Meeting meeting structure
-type Meeting struct {
-	start int
-	end   int
-}
+const start, end = 0, 1
 
 // MinHeap to find out the smallest meeting end time
-type MinHeap []int
+// Minheap restrictions are !mh.Less(j, i) for 0 <= i < mh.Len() and 2*i+1 <= j <= 2*i+2 and j < mh.Len()
+type MinHeap [][]int
 
 func (mh MinHeap) Len() int {
 	return len(mh)
 }
 
 func (mh MinHeap) Less(i, j int) bool {
-	return mh[i] < mh[j]
+	return mh[i][end] > mh[j][end]
 }
 
 func (mh MinHeap) Swap(i, j int) {
@@ -30,7 +29,7 @@ func (mh MinHeap) Swap(i, j int) {
 func (mh *MinHeap) Push(x interface{}) {
 	// Push and Pop use pointer receivers because they modify the slice's length,
 	// not just its contents.
-	*mh = append(*mh, x.(int))
+	*mh = append(*mh, x.([]int))
 }
 
 // Pop popup an item
@@ -40,6 +39,16 @@ func (mh *MinHeap) Pop() interface{} {
 	x := old[n-1]
 	*mh = old[0 : n-1]
 	return x
+}
+
+// Peek get the peek element
+func (mh *MinHeap) Peek() interface{} {
+	old := *mh
+	n := old.Len()
+	if n < 1 {
+		return []int{-1, -1}
+	}
+	return old[n-1]
 }
 
 /*
@@ -55,10 +64,24 @@ Explanation: Since [1, 4] and [2, 5] overlap, we need two rooms to hold these tw
 func minimumMeetingRooms(meetings [][]int) int {
 	sortMeetings(meetings)
 	minRooms := 0
-	//
-	fmt.Println(meetings)
-	return -1
+	minHeap := &MinHeap{}
+	for i := 0; i < len(meetings); i++ {
+		meeting := meetings[i]
+		minHeapPeekEnd := minHeap.Peek().([]int)[1]
+		if minHeapPeekEnd != -1 {
+			for minHeap.Len() > 0 && meeting[start] >= minHeapPeekEnd { // remove all meetings that had ended
+				heap.Pop(minHeap)
+			}
+		}
+		heap.Push(minHeap, meeting)
+		heap.Fix(minHeap, minHeap.Len()-1)
+		// all active meetings are in the min heap, so we need for all of them
+		minRooms = int(math.Max(float64(minRooms), float64(minHeap.Len())))
+	}
+	return minRooms
 }
+
+// sort 2d array by slice
 func sortMeetings(matrix [][]int) {
 	sort.Slice(matrix[:], func(i, j int) bool {
 		for x := range matrix[i] {
