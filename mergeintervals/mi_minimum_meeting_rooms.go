@@ -41,8 +41,8 @@ func (mh *MinHeap) Pop() interface{} {
 	return x
 }
 
-// Peek get the peek element
-func (mh *MinHeap) Peek() interface{} {
+// Peak get the Peak element
+func (mh *MinHeap) Peak() interface{} {
 	old := *mh
 	n := old.Len()
 	if n < 1 {
@@ -72,7 +72,7 @@ func minimumMeetingRooms(meetings [][]int) int {
 	minHeap := &MinHeap{}
 	for i := 0; i < len(meetings); i++ {
 		meeting := meetings[i]
-		minHeapPeekEnd := minHeap.Peek().([]int)[1]
+		minHeapPeekEnd := minHeap.Peak().([]int)[1]
 		if minHeapPeekEnd != -1 {
 			for minHeap.Len() > 0 && meeting[start] >= minHeapPeekEnd { // remove all meetings that had ended
 				heap.Pop(minHeap)
