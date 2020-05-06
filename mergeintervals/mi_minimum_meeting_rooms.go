@@ -26,6 +26,22 @@ func (mh MinHeap) Swap(i, j int) {
 	mh[i], mh[j] = mh[j], mh[i]
 }
 
+// Push add an item
+func (mh *MinHeap) Push(x interface{}) {
+	// Push and Pop use pointer receivers because they modify the slice's length,
+	// not just its contents.
+	*mh = append(*mh, x.(int))
+}
+
+// Pop popup an item
+func (mh *MinHeap) Pop() interface{} {
+	old := *mh
+	n := len(old)
+	x := old[n-1]
+	*mh = old[0 : n-1]
+	return x
+}
+
 /*
 Given a list of intervals representing the start and end time of 'N' meetings.
 find the minimum number of rooms required to hold all the meetings.
