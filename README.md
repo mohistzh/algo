@@ -13,7 +13,7 @@
 
 [**Merge Intervals**](https://github.com/mohistzh/algo/tree/master/mergeintervals)
 
-**Cyclic Sort**
+[**Cyclic Sort**](https://github.com/mohistzh/algo/tree/master/cyclicsort)
 
 **In-Place Reversal of a LinkedList**
 
