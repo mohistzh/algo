@@ -4,7 +4,7 @@ Merge Intervals Pattern which describes an efficient technique to deal with over
 
 For example, given two intervals ('a' and 'b'), there will be **six different ways** the two intervals can relate to each other:
 
-![overlapping](https://github.com/mohistzh/algo/mergeintervals/overlapping.png)
+![overlapping](https://raw.githubusercontent.com/mohistzh/algo/master/mergeintervals/overlapping.png)
 
 
 Understanding the above six cases will help us in solving all intervals related problems.
