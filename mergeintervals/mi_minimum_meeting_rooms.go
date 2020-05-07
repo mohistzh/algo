@@ -67,7 +67,7 @@ Similar problems:
 */
 
 func minimumMeetingRooms(meetings [][]int) int {
-	sortMeetings(meetings)
+	sortMatrix(meetings)
 	minRooms := 0
 	minHeap := &MinHeap{}
 	for i := 0; i < len(meetings); i++ {
@@ -87,7 +87,7 @@ func minimumMeetingRooms(meetings [][]int) int {
 }
 
 // sort 2d array by slice
-func sortMeetings(matrix [][]int) {
+func sortMatrix(matrix [][]int) {
 	sort.Slice(matrix[:], func(i, j int) bool {
 		for x := range matrix[i] {
 			if matrix[i][x] == matrix[j][x] {
