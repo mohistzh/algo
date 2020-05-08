@@ -15,6 +15,20 @@ Explanation: The array should have all numbers from 1 to 8, due to duplicates 4,
 */
 func findMissingNumbers(input []int) []int {
 	var result []int
+	i, n := 0, len(input)
+	for i < n {
+		j := input[i] - 1
+		if input[i] != input[j] { // index and value wasn't match together, swap it
+			input[i], input[j] = input[j], input[i]
+		} else {
+			i++
+		}
+	}
+	for i := 0; i < n; i++ {
+		if input[i] != i+1 { // because the restriction is 1 to 'n'
+			result = append(result, i+1)
+		}
+	}
 	return result
 }
 func main() {
