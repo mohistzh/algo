@@ -12,6 +12,20 @@ import (
 	Explanation: The smallest missing positive number is '3'
 */
 func findSmallestMissingPositiveNumber(input []int) int {
+	i, n := 0, len(input)
+	for i < n {
+		j := input[i] - 1
+		if input[i] > 0 && input[i] <= n && input[i] != input[j] {
+			input[i], input[j] = input[j], input[i]
+		} else {
+			i++
+		}
+	}
+	for i := 0; i < n; i++ {
+		if input[i] != i+1 { // find smallest positive missing number
+			return i + 1
+		}
+	}
 	return -1
 }
 
