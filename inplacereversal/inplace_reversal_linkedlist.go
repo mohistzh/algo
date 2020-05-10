@@ -18,9 +18,9 @@ func reverse(head *Node) *Node {
 	var prev *Node
 	for current != nil {
 		next := current.next //temporarily save the next node
-		current.next = prev
-		prev = current
-		current = next // move pointer
+		current.next = prev  // reverse the current node
+		prev = current       // point prev node to the current node
+		current = next       // move pointer
 	}
 	return prev
 
