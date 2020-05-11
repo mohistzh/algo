@@ -16,7 +16,47 @@ Given the head of a LinkedList and a number ‘k’, reverse every ‘k’ sized
 If, in the end, you are left with a sub-list with less than ‘k’ elements, reverse it too.
 */
 func reverseEveryKElements(head *MyNode2, k int) *MyNode2 {
+	// base check
+	if k <= 1 || head == nil {
+		return head
+	}
+	current := head
+	var prev *MyNode2
+	for {
+		lastNodeOfPrevPart := prev
+		lastNodeOfSubList := current
+		count := 0
+		// reverse sublist
+		for current != nil && count < k {
+			next := current.next
+			current.next = prev
+			prev = current
+			current = next
+			count++
+		}
+		if lastNodeOfPrevPart != nil {
+			lastNodeOfPrevPart.next = prev
+		} else {
+			head = prev
+		}
+
+		lastNodeOfSubList.next = current
+		if current == nil {
+			break
+		}
+		prev = lastNodeOfSubList
+	}
 	return head
+
+}
+func findNodeLength(head *MyNode2) int {
+	current := head
+	size := 0
+	for current != nil {
+		current = current.next
+		size++
+	}
+	return size
 }
 func printMyNode2(head *MyNode2) {
 	current := head
