@@ -15,7 +15,7 @@
 
 [**Cyclic Sort**](https://github.com/mohistzh/algo/tree/master/cyclicsort)
 
-**In-Place Reversal of a LinkedList**
+[**In-Place Reversal of a LinkedList**](https://github.com/mohistzh/algo/tree/master/inplacereversal)
 
 **Tree Breadth First Search**
 
