@@ -14,7 +14,38 @@ Given the head of a LinkedList and a number ‘k’, reverse every alternating �
 If, in the end, you are left with a sub-list with less than ‘k’ elements, reverse it too.
 */
 func reverseAlternatingKElements(head *MyNode3, k int) *MyNode3 {
+	current := head
+	var prev *MyNode3
+	for {
+		// we consider multip parts of the linked list, prev and current nodes used to link adjancy sub-list
+		lastNodeOfPrevSubList := prev
+		lastNodeOfCurSubList := current
+		count := 0
+		for current != nil && count < k {
+			next := current.next
+			current.next = prev
+			prev = current
+			current = next
+			count++
+		}
+		if lastNodeOfPrevSubList != nil {
+			lastNodeOfPrevSubList.next = prev
+		} else {
+			head = prev
+		}
+		lastNodeOfCurSubList.next = current
+		count = 0
+		// skipping k elements
+		for current != nil && count < k {
+			prev = current
+			current = current.next
+			count++
+		}
+		if current == nil {
+			break
+		}
 
+	}
 	return head
 }
 
@@ -37,7 +68,9 @@ func main() {
 	head.next.next.next.next.next = &MyNode3{value: 6}
 	head.next.next.next.next.next.next = &MyNode3{value: 7}
 	head.next.next.next.next.next.next.next = &MyNode3{value: 8}
-	head = reverseAlternatingKElements(head, 2)
+	head.next.next.next.next.next.next.next.next = &MyNode3{value: 9}
+	head.next.next.next.next.next.next.next.next.next = &MyNode3{value: 10}
+	head = reverseAlternatingKElements(head, 3)
 	printMyNode3(head)
 
 }
