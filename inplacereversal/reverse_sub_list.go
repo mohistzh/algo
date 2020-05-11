@@ -14,7 +14,25 @@ type MyNode1 struct {
 Given the head of a LinkedList and two positions ‘p’ and ‘q’, reverse the LinkedList from position ‘p’ to ‘q’.
 */
 func reverseSubList(head *MyNode1, pos []int) *MyNode1 {
-	return nil
+	start, end, flag := pos[0], pos[1], false
+	current := head
+	var prev *MyNode1
+	for current != nil {
+		if current.value == start {
+			flag = true
+		}
+		if flag {
+			//next := current.next
+			current.next = prev
+			prev = current
+			//current = next
+
+		}
+		flag = !(flag && current.value == end)
+		current = current.next
+	}
+	return head
+
 }
 func printMyNode1(head *MyNode1) {
 	current := head
@@ -33,5 +51,6 @@ func main() {
 	head.next.next.next = &MyNode1{value: 4}
 	head.next.next.next.next = &MyNode1{value: 5}
 	head = reverseSubList(head, []int{2, 4})
+	printMyNode1(head)
 
 }
