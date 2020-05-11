@@ -49,15 +49,6 @@ func reverseEveryKElements(head *MyNode2, k int) *MyNode2 {
 	return head
 
 }
-func findNodeLength(head *MyNode2) int {
-	current := head
-	size := 0
-	for current != nil {
-		current = current.next
-		size++
-	}
-	return size
-}
 func printMyNode2(head *MyNode2) {
 	current := head
 	for current != nil {
