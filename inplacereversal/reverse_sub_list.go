@@ -20,35 +20,34 @@ func reverseSubList(head *MyNode1, pos []int) *MyNode1 {
 	}
 	current := head
 	var prev *MyNode1
-	i := 0
-	// first part of the linked list, skipping start - 1 nodes, current will point to 'start'th node
-	for current != nil && i < start-1 {
+	// We are taking three parts of the linked list in consideration.
+	// the first part is before the index 'start'
+	// the second part is the sub-list between 'start' and 'end'
+	// the third part is after index 'end'
+	// this is the first part of the linked list, 'current' will points to 'start'th node
+	for current != nil && current.value != start {
 		prev = current
 		current = current.next
-		i++
 	}
-	// we are consider three parts of the linked list
-	// the first part is before index 'start', the second part is between 'start' and 'end', the last part after index 'end'
+	// last node of the first part of linked list
 	lastNodeOfFirstPart := prev
+	// we will reverse the second part, so the first node we meet in the second part, it becomes the last node of sub list
 	lastNodeOfSubList := current
-	i = 0
-	// sub-list part of the linked list
-	for current != nil && i < end-start+1 {
+	// reverse the second part of the linked list
+	for current != nil && prev.value != end { //use prev as base check, because it's the last node of the sublist should be inclusive
 		next := current.next
 		current.next = prev
-		prev = current // prev is the last node of this part
-		current = next
-		i++
+		prev = current
+		current = next // move
 	}
-	// connect with the first part
+	// we connect with the first part
 	if lastNodeOfFirstPart != nil {
 		lastNodeOfFirstPart.next = prev
 	} else {
-		head = prev // start from the first node
+		head = prev
 	}
-	// connect with the last part
+	// we connect with the last part
 	lastNodeOfSubList.next = current
-
 	return head
 
 }
@@ -64,11 +63,11 @@ func printMyNode1(head *MyNode1) {
 
 func main() {
 	head := &MyNode1{value: 1}
-	head.next = &MyNode1{value: 2}
-	head.next.next = &MyNode1{value: 3}
+	head.next = &MyNode1{value: 3}
+	head.next.next = &MyNode1{value: 9}
 	head.next.next.next = &MyNode1{value: 4}
 	head.next.next.next.next = &MyNode1{value: 5}
-	head = reverseSubList(head, []int{2, 4})
+	head = reverseSubList(head, []int{3, 4})
 	printMyNode1(head)
 
 }
