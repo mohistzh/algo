@@ -26,7 +26,7 @@ func reverseEveryKElements(head *MyNode2, k int) *MyNode2 {
 		lastNodeOfPrevPart := prev
 		lastNodeOfSubList := current
 		count := 0
-		// reverse sublist
+		// reverse k elements of sublist
 		for current != nil && count < k {
 			next := current.next
 			current.next = prev
@@ -34,12 +34,14 @@ func reverseEveryKElements(head *MyNode2, k int) *MyNode2 {
 			current = next
 			count++
 		}
+		// connect with the previous part
 		if lastNodeOfPrevPart != nil {
 			lastNodeOfPrevPart.next = prev
 		} else {
 			head = prev
 		}
 
+		// connect with the next part
 		lastNodeOfSubList.next = current
 		if current == nil {
 			break
