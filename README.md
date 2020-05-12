@@ -17,7 +17,7 @@
 
 [**In-Place Reversal of a LinkedList**](https://github.com/mohistzh/algo/tree/master/inplacereversal)
 
-[**Tree Breadth First Search**]((https://github.com/mohistzh/algo/tree/master/tbfs)
+[**Tree Breadth First Search**](https://github.com/mohistzh/algo/tree/master/tbfs)
 
 **Tree Depth First Search**
 
