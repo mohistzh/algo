@@ -10,35 +10,36 @@ type MyTreeNode3 struct {
 	left, right *MyTreeNode3
 }
 
+/*
+Given a binary tree, populate an array to represent its zigzag level order traversal. You should populate the values of all nodes of the first level from left to right,
+then right to left for the next level and keep alternating in the same manner for the following levels.
+*/
 func zigzagTraversal(root *MyTreeNode3) [][]int {
 	var result [][]int
-	zigzag := false
-	var queue []*MyTreeNode3
+	var queue []*MyTreeNode3 // to save downside level nodes
+	zigzag := false          // root node state
 	queue = append(queue, root)
-
 	for len(queue) > 0 {
 		levelLength := len(queue)
-		var currentLevel []int
+		var currentLevelQueue []int // to save current level node value with zigzag state order
 		for i := 0; i < levelLength; i++ {
-			node := queue[0]
-			queue = queue[1:] // deque
-			if zigzag {       // if zigzag is true, from right to left
-				currentLevel = append([]int{node.value}, currentLevel...)
+			currentNode := queue[0] // pop up
+			queue = queue[1:]       // deque
+			if zigzag {             // left -> right
+				currentLevelQueue = append([]int{currentNode.value}, currentLevelQueue...)
 			} else {
-				currentLevel = append(currentLevel, node.value)
+				currentLevelQueue = append(currentLevelQueue, currentNode.value)
 			}
 
-			if node.left != nil {
-				queue = append(queue, node.left)
+			if currentNode.left != nil {
+				queue = append(queue, currentNode.left)
 			}
-			if node.right != nil {
-				queue = append(queue, node.right)
+			if currentNode.right != nil {
+				queue = append(queue, currentNode.right)
 			}
-
 		}
-
-		result = append(result, currentLevel)
-		zigzag = !zigzag
+		result = append(result, currentLevelQueue)
+		zigzag = !zigzag // reverse the traversal direction
 
 	}
 	return result
