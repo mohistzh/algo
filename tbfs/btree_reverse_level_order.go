@@ -35,7 +35,7 @@ func reverseLevelOrderTraversal(root *MyTreeNode2) [][]int {
 				queue = append(queue, node.right)
 			}
 		}
-		result = append(result, levelNodes)
+		result = append([][]int{levelNodes}, result...) // prepend level nodes to the beginning.
 	}
 	return result
 
