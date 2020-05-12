@@ -16,9 +16,36 @@ You should populate the values of all nodes of each level from left to right in 
 */
 func traverseMyTreeNode1(root *MyTreeNode1) [][]int {
 	var result [][]int
+	if root == nil {
+		return result
+	}
+	// use a queue to store nodes of each level
+	var queue []*MyTreeNode1
+	queue = append(queue, root)
+	for len(queue) > 0 {
+		levelSize := len(queue)
+		var currentLevel []int // use to store value of nodes
+		for i := 0; i < levelSize; i++ {
+			currentNode := queue[0]
+			queue = queue[1:] // dequeue top element
+			currentLevel = append(currentLevel, currentNode.value)
+			if currentNode.left != nil {
+				queue = append(queue, currentNode.left) // fill in left node
+			}
+			if currentNode.right != nil {
+				queue = append(queue, currentNode.right) // fill in right node
+			}
+		}
+		result = append(result, currentLevel) // store level nodes
+	}
 	return result
 }
 
+/*
+	12
+	7 1
+	9 10 5
+*/
 func main() {
 	root := &MyTreeNode1{value: 12}
 	root.left = &MyTreeNode1{value: 7}
