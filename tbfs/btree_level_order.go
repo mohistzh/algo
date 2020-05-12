@@ -36,7 +36,7 @@ func traverseMyTreeNode1(root *MyTreeNode1) [][]int {
 				queue = append(queue, currentNode.right) // fill in right node
 			}
 		}
-		result = append(result, currentLevel) // store level nodes
+		result = append(result, currentLevel) // store level
 	}
 	return result
 }
