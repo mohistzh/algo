@@ -15,8 +15,26 @@ Find the minimum depth of a binary tree. The minimum depth is the number of node
 
 */
 func findMinimumDepth(root *MyTreeNode5) int {
-	minimum := -1
-
+	minimum := 0
+	var queue []*MyTreeNode5
+	queue = append(queue, root)
+	for len(queue) > 0 { // tree level
+		levelSize := len(queue)
+		minimum++
+		for i := 0; i < levelSize; i++ { // node size
+			node := queue[0]
+			queue = queue[1:]
+			if node.left == nil && node.right == nil {
+				return minimum
+			}
+			if node.left != nil {
+				queue = append(queue, node.left)
+			}
+			if node.right != nil {
+				queue = append(queue, node.right)
+			}
+		}
+	}
 	return minimum
 }
 
