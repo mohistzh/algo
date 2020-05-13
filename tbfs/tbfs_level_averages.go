@@ -14,7 +14,32 @@ type MyTreeNode4 struct {
 Given a binary tree, populate an array to represent the averages of all of its levels.
 */
 func levelAverages(root *MyTreeNode4) []int {
-	return nil
+	var result []int
+	var queue []*MyTreeNode4
+	queue = append(queue, root)
+	for len(queue) > 0 {
+		var levelNodeQueue []int
+		levelLength := len(queue)
+		for i := 0; i < levelLength; i++ {
+			node := queue[0]
+			queue = queue[1:]
+			levelNodeQueue = append(levelNodeQueue, node.value)
+			if node.left != nil {
+				queue = append(queue, node.left)
+			}
+			if node.right != nil {
+				queue = append(queue, node.right)
+			}
+		}
+		length := len(levelNodeQueue)
+		sum := 0
+		for i := 0; i < length; i++ {
+			sum += levelNodeQueue[i]
+		}
+		result = append(result, sum/length)
+	}
+
+	return result
 }
 
 func main() {
