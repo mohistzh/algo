@@ -20,6 +20,7 @@ func levelAverages(root *MyTreeNode4) []int {
 	for len(queue) > 0 {
 		var levelNodeQueue []int
 		levelLength := len(queue)
+		sum := 0
 		for i := 0; i < levelLength; i++ {
 			node := queue[0]
 			queue = queue[1:]
@@ -30,12 +31,9 @@ func levelAverages(root *MyTreeNode4) []int {
 			if node.right != nil {
 				queue = append(queue, node.right)
 			}
+			sum += node.value
 		}
 		length := len(levelNodeQueue)
-		sum := 0
-		for i := 0; i < length; i++ {
-			sum += levelNodeQueue[i]
-		}
 		result = append(result, sum/length)
 	}
 
