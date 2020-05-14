@@ -41,24 +41,22 @@ func connectLevelOrderSiblings(root *MyTreeNode8) *MyTreeNode8 {
 }
 
 func printMyTreeNode8(root *MyTreeNode8) {
-	var queue []*MyTreeNode8
-	queue = append(queue, root)
-	for len(queue) > 0 {
-		levelSize := len(queue)
-		for i := 0; i < levelSize; i++ {
-			node := queue[0]
-			queue = queue[1:]
-			if node.left != nil {
-				queue = append(queue, node.left)
+	nextLevelRoot := root
+	for nextLevelRoot != nil {
+		current := nextLevelRoot
+		nextLevelRoot = nil
+		for current != nil {
+			fmt.Print(current.value, " ")
+			if nextLevelRoot == nil {
+				if current.left != nil {
+					nextLevelRoot = current.left
+				} else if current.right != nil {
+					nextLevelRoot = current.right
+				}
 			}
-			if node.right != nil {
-				queue = append(queue, node.right)
-			}
-			fmt.Print(node.value)
-			fmt.Print(" ")
+			current = current.next
 		}
 		fmt.Println()
-
 	}
 }
 
