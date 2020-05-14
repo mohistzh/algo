@@ -14,9 +14,23 @@ type MyTreeNode7 struct {
 Given a binary tree and a node, find the level order successor of the given node in the tree.
 The level order successor is the node that appears right after the given node in the level order traversal.
 */
-func findLevelOrderSuccessor(root *MyTreeNode7, node *MyTreeNode7) int {
-	successor := 0
-	return successor
+func findLevelOrderSuccessor(root *MyTreeNode7, target int) *MyTreeNode7 {
+	var queue []*MyTreeNode7
+	queue = append(queue, root)
+	for len(queue) > 0 {
+		node := queue[0]
+		queue = queue[1:]
+		if node.left != nil {
+			queue = append(queue, node.left)
+		}
+		if node.right != nil {
+			queue = append(queue, node.right)
+		}
+		if node.value == target {
+			break
+		}
+	}
+	return queue[0]
 }
 
 func main() {
@@ -25,5 +39,5 @@ func main() {
 	root.right = &MyTreeNode7{value: 3}
 	root.left.left = &MyTreeNode7{value: 4}
 	root.left.left = &MyTreeNode7{value: 5}
-	fmt.Println(findLevelOrderSuccessor(root, root.right))
+	fmt.Println(findLevelOrderSuccessor(root, root.right.value))
 }
