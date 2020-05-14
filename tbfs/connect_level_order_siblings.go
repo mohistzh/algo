@@ -6,16 +6,38 @@ import (
 
 // MyTreeNode8 tree node
 type MyTreeNode8 struct {
-	value       int
-	left, right *MyTreeNode8
+	value             int
+	left, right, next *MyTreeNode8
 }
 
 /*
 Given a binary tree, connect each node with its level order successor. The last node of each level should point to a null node.
 */
 func connectLevelOrderSiblings(root *MyTreeNode8) *MyTreeNode8 {
-	printMyTreeNode8(root)
-	return nil
+	var queue []*MyTreeNode8
+	queue = append(queue, root)
+
+	for len(queue) > 0 {
+		var prev *MyTreeNode8
+		levelSize := len(queue)
+		for i := 0; i < levelSize; i++ {
+			node := queue[0]
+			queue = queue[1:]
+			if prev != nil {
+				prev.next = node
+			}
+			prev = node
+
+			if node.left != nil {
+				queue = append(queue, node.left)
+			}
+			if node.right != nil {
+				queue = append(queue, node.right)
+			}
+		}
+
+	}
+	return root
 }
 
 func printMyTreeNode8(root *MyTreeNode8) {
@@ -48,8 +70,6 @@ func main() {
 	root.left.right = &MyTreeNode8{value: 5}
 	root.right.left = &MyTreeNode8{value: 6}
 	root.right.right = &MyTreeNode8{value: 7}
-	fmt.Println("Before")
+	root = connectLevelOrderSiblings(root)
 	printMyTreeNode8(root)
-	fmt.Println("After")
-	connectLevelOrderSiblings(root)
 }
