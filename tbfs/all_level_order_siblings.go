@@ -1,5 +1,9 @@
 package main
 
+import (
+	"fmt"
+)
+
 // MyTreeNode9 tree node
 type MyTreeNode9 struct {
 	value             int
@@ -19,6 +23,7 @@ func connectAllLevelOrderSiblings(root *MyTreeNode9) {
 	for len(queue) > 0 {
 		currentNode = queue[0]
 		queue = queue[1:]
+		// connect to next node
 		if previousNode != nil {
 			previousNode.next = currentNode
 		}
@@ -33,8 +38,13 @@ func connectAllLevelOrderSiblings(root *MyTreeNode9) {
 	}
 }
 
+// print tree node in a linked list way
 func printMyTreeNode9(root *MyTreeNode9) {
-
+	current := root
+	for current != nil {
+		fmt.Print(current.value, " ")
+		current = current.next
+	}
 }
 
 func main() {
