@@ -2,8 +2,8 @@ package main
 
 // MyTreeNode9 tree node
 type MyTreeNode9 struct {
-	value            int
-	left, right, ext *MyTreeNode9
+	value             int
+	left, right, next *MyTreeNode9
 }
 
 /*
@@ -11,8 +11,26 @@ Given a binary tree, connect each node with its level order successor.
 The last node of each level should point to the first node of the next level.
 
 */
-func connectAllLevelOrderSiblings(root *MyTreeNode9) *MyTreeNode9 {
-	return root
+func connectAllLevelOrderSiblings(root *MyTreeNode9) {
+	var queue []*MyTreeNode9
+	queue = append(queue, root)
+	var currentNode *MyTreeNode9
+	var previousNode *MyTreeNode9
+	for len(queue) > 0 {
+		currentNode = queue[0]
+		queue = queue[1:]
+		if previousNode != nil {
+			previousNode.next = currentNode
+		}
+		previousNode = currentNode
+		if currentNode.left != nil {
+			queue = append(queue, currentNode.left)
+		}
+		if currentNode.right != nil {
+			queue = append(queue, currentNode.right)
+		}
+
+	}
 }
 
 func printMyTreeNode9(root *MyTreeNode9) {
