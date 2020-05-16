@@ -19,7 +19,7 @@
 
 [**Tree Breadth First Search**](https://github.com/mohistzh/algo/tree/master/tbfs)
 
-**Tree Depth First Search**
+[**Tree Depth First Search**](https://github.com/mohistzh/algo/tree/master/tdfs)
 
 **Two Heaps**
 
