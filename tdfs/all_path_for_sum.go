@@ -54,5 +54,12 @@ func main() {
 	root.right.left = &MyTreeNode2{value: 2}
 	root.right.right = &MyTreeNode2{value: 7}
 	fmt.Println(findAllPathForSum(root, 12))
+	root = &MyTreeNode2{value: 12}
+	root.left = &MyTreeNode2{value: 7}
+	root.right = &MyTreeNode2{value: 1}
+	root.left.left = &MyTreeNode2{value: 4}
+	root.right.left = &MyTreeNode2{value: 10}
+	root.right.right = &MyTreeNode2{value: 5}
+	fmt.Println(findAllPathForSum(root, 23))
 
 }
