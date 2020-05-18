@@ -18,14 +18,17 @@ Find the total sum of all the numbers represented by all paths.
 */
 func sumOfPathNumbers(root *MyTreeNode3) int {
 	var currentPath []int
-	sum := sumOfPathNumbersRecursive(root, currentPath)
-	return sum
+	sum1 := sumOfPathNumbersRecursiveBF(root, currentPath)
+	sum2 := sumOfPathNumbersRecursiveMath(root, 0)
+	fmt.Println(sum1, sum2)
+	return sum1
 }
 
-func sumOfPathNumbersRecursive(currentNode *MyTreeNode3, currentPath []int) int {
+func sumOfPathNumbersRecursiveBF(currentNode *MyTreeNode3, currentPath []int) int {
 	if currentNode == nil {
 		return 0
 	}
+
 	currentPath = append(currentPath, currentNode.value)
 	if currentNode.left == nil && currentNode.right == nil {
 		// concatenating elements in the int slice
@@ -40,8 +43,19 @@ func sumOfPathNumbersRecursive(currentNode *MyTreeNode3, currentPath []int) int 
 		currentPath = currentPath[:len(currentPath)-1]
 		return int(sumOfPath)
 	}
-	return sumOfPathNumbersRecursive(currentNode.left, currentPath) + sumOfPathNumbersRecursive(currentNode.right, currentPath)
+	return sumOfPathNumbersRecursiveBF(currentNode.left, currentPath) + sumOfPathNumbersRecursiveBF(currentNode.right, currentPath)
 
+}
+
+func sumOfPathNumbersRecursiveMath(currentNode *MyTreeNode3, sumPath int) int {
+	if currentNode == nil {
+		return 0
+	}
+	sumPath = 10*sumPath + currentNode.value
+	if currentNode.left == nil && currentNode.right == nil {
+		return sumPath
+	}
+	return sumOfPathNumbersRecursiveMath(currentNode.left, sumPath) + sumOfPathNumbersRecursiveMath(currentNode.right, sumPath)
 }
 
 func main() {
