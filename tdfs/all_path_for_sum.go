@@ -45,6 +45,33 @@ func findAllPathRecursive(currentNode *MyTreeNode2, sum int, currentPath []int, 
 
 }
 
+/*
+Given a binary tree, find the root-to-leaf path with the maximum sum.
+*/
+
+func findMaximumSumPath(root *MyTreeNode2) [][]int {
+	var currentPath []int
+	var maximumPaths AllPath
+	findMaximumSumPathRecursive(root, currentPath, &maximumPaths)
+	return maximumPaths.store
+}
+
+func findMaximumSumPathRecursive(currentNode *MyTreeNode2, currentPath []int, maximumPaths *AllPath) {
+	if currentNode == nil {
+		return
+	}
+	currentPath = append(currentPath, currentNode.value)
+	// reached to the end
+	if currentNode.left == nil && currentNode.right == nil {
+		maximumPaths.store = append(maximumPaths.store, currentPath)
+		//currentPath = currentPath[:len(currentPath)-1]
+
+	} else {
+		findMaximumSumPathRecursive(currentNode.left, currentPath, maximumPaths)
+		findMaximumSumPathRecursive(currentNode.right, currentPath, maximumPaths)
+	}
+}
+
 func main() {
 	root := &MyTreeNode2{value: 1}
 	root.left = &MyTreeNode2{value: 7}
@@ -61,5 +88,6 @@ func main() {
 	root.right.left = &MyTreeNode2{value: 10}
 	root.right.right = &MyTreeNode2{value: 5}
 	fmt.Println(findAllPathForSum(root, 23))
+	fmt.Println(findMaximumSumPath(root))
 
 }
