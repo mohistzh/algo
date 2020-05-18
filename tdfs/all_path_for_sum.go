@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"math"
 )
 
 // MyTreeNode2 tree node
@@ -49,27 +50,36 @@ func findAllPathRecursive(currentNode *MyTreeNode2, sum int, currentPath []int, 
 Given a binary tree, find the root-to-leaf path with the maximum sum.
 */
 
-func findMaximumSumPath(root *MyTreeNode2) [][]int {
+func findMaximumSumPath(root *MyTreeNode2) (int, [][]int) {
+	var allPath AllPath
 	var currentPath []int
-	var maximumPaths AllPath
-	findMaximumSumPathRecursive(root, currentPath, &maximumPaths)
-	return maximumPaths.store
+	// finding maximum sum first
+	maximumSum := findMaximumSumRecursive(root)
+	// finding path by sum
+	findMaximumSumPathRecursive(root, maximumSum, currentPath, &allPath)
+	return maximumSum, allPath.store
 }
-
-func findMaximumSumPathRecursive(currentNode *MyTreeNode2, currentPath []int, maximumPaths *AllPath) {
+func findMaximumSumPathRecursive(currentNode *MyTreeNode2, sum int, currentPath []int, allPath *AllPath) {
 	if currentNode == nil {
 		return
 	}
 	currentPath = append(currentPath, currentNode.value)
-	// reached to the end
-	if currentNode.left == nil && currentNode.right == nil {
-		maximumPaths.store = append(maximumPaths.store, currentPath)
-		//currentPath = currentPath[:len(currentPath)-1]
-
+	if currentNode.value == sum && currentNode.left == nil && currentNode.right == nil {
+		allPath.store = append(allPath.store, currentPath)
+		currentPath = currentPath[:len(currentPath)-1]
 	} else {
-		findMaximumSumPathRecursive(currentNode.left, currentPath, maximumPaths)
-		findMaximumSumPathRecursive(currentNode.right, currentPath, maximumPaths)
+		findMaximumSumPathRecursive(currentNode.left, sum-currentNode.value, currentPath, allPath)
+		findMaximumSumPathRecursive(currentNode.right, sum-currentNode.value, currentPath, allPath)
 	}
+
+}
+func findMaximumSumRecursive(currentNode *MyTreeNode2) int {
+	if currentNode == nil {
+		return 0
+	}
+	maxSumLeft := findMaximumSumRecursive(currentNode.left)
+	maxSumRight := findMaximumSumRecursive(currentNode.right)
+	return int(math.Max(float64(maxSumLeft), float64(maxSumRight))) + currentNode.value
 }
 
 func main() {
