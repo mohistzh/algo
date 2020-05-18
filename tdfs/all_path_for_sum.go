@@ -10,30 +10,37 @@ type MyTreeNode2 struct {
 	left, right *MyTreeNode2
 }
 
+// AllPath use to store path data
+type AllPath struct {
+	store [][]int
+}
+
 /*
 Given a binary tree and a number ‘S’, find all paths from root-to-leaf such that the sum of all the node values of each path equals ‘S’.
 
 */
-func findAllPathForSum(root *MyTreeNode2, sum int) {
+func findAllPathForSum(root *MyTreeNode2, sum int) [][]int {
 	var currentPath []int
-	findAllPathRecursive(root, sum, currentPath)
+	var allPath AllPath
+	findAllPathRecursive(root, sum, currentPath, &allPath)
+	return allPath.store
 }
 
 /*
 Find path by recursive solution
 */
-func findAllPathRecursive(currentNode *MyTreeNode2, sum int, currentPath []int) {
+func findAllPathRecursive(currentNode *MyTreeNode2, sum int, currentPath []int, allPath *AllPath) {
 	if currentNode == nil {
 		return
 	}
 	currentPath = append(currentPath, currentNode.value)
 	if currentNode.value == sum && currentNode.left == nil && currentNode.right == nil {
-		fmt.Println(currentPath)
+		allPath.store = append(allPath.store, currentPath)
 		// remove currentNode in currentPath
 		currentPath = currentPath[:len(currentPath)-1]
 	} else {
-		findAllPathRecursive(currentNode.left, sum-currentNode.value, currentPath)
-		findAllPathRecursive(currentNode.right, sum-currentNode.value, currentPath)
+		findAllPathRecursive(currentNode.left, sum-currentNode.value, currentPath, allPath)
+		findAllPathRecursive(currentNode.right, sum-currentNode.value, currentPath, allPath)
 	}
 
 }
@@ -46,6 +53,6 @@ func main() {
 	root.left.right = &MyTreeNode2{value: 5}
 	root.right.left = &MyTreeNode2{value: 2}
 	root.right.right = &MyTreeNode2{value: 7}
-	findAllPathForSum(root, 12)
+	fmt.Println(findAllPathForSum(root, 12))
 
 }
