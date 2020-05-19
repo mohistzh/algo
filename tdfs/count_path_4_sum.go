@@ -49,12 +49,12 @@ func main() {
 
 	fmt.Println(countPathsForSum(root, 12))
 
-	// root = &MyTreeNode5{value: 12}
-	// root.left = &MyTreeNode5{value: 7}
-	// root.right = &MyTreeNode5{value: 1}
-	// root.left.left = &MyTreeNode5{value: 4}
-	// root.right.left = &MyTreeNode5{value: 10}
-	// root.right.right = &MyTreeNode5{value: 5}
-	// fmt.Println(countPathsForSum(root, 11))
+	root = &MyTreeNode5{value: 12}
+	root.left = &MyTreeNode5{value: 7}
+	root.right = &MyTreeNode5{value: 1}
+	root.left.left = &MyTreeNode5{value: 4}
+	root.right.left = &MyTreeNode5{value: 10}
+	root.right.right = &MyTreeNode5{value: 5}
+	fmt.Println(countPathsForSum(root, 11))
 
 }
