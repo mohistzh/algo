@@ -15,8 +15,11 @@ Given a binary tree and a number sequence, find if the sequence is present as a 
 */
 func pathWithGivenSequence(root *MyTreeNode4, sequence []int) bool {
 	var currentPath []int
-	return pathWithGivenSequenceRecursive(root, currentPath, sequence)
+	pathWithGivenSequenceRecursive(root, currentPath, sequence)
+	return pathWithGivenSequenceRecursive2(root, sequence, 0)
 }
+
+// The solution when we reached to the leaf then compare sequence with path list
 func pathWithGivenSequenceRecursive(currentNode *MyTreeNode4, currentPath []int, sequence []int) bool {
 	result := false
 	if currentNode == nil {
@@ -32,6 +35,24 @@ func pathWithGivenSequenceRecursive(currentNode *MyTreeNode4, currentPath []int,
 	return pathWithGivenSequenceRecursive(currentNode.left, currentPath, sequence) || pathWithGivenSequenceRecursive(currentNode.right, currentPath, sequence)
 
 }
+
+// comparing tree node with each element of sequence
+func pathWithGivenSequenceRecursive2(currentNode *MyTreeNode4, sequence []int, sequenceIndex int) bool {
+	if currentNode == nil {
+		return false
+	}
+	if sequenceIndex >= len(sequence) || currentNode.value != sequence[sequenceIndex] {
+		return false
+	}
+
+	if sequenceIndex == len(sequence)-1 && currentNode.left == nil && currentNode.right == nil {
+		return true
+	}
+
+	return pathWithGivenSequenceRecursive2(currentNode.left, sequence, sequenceIndex+1) ||
+		pathWithGivenSequenceRecursive2(currentNode.right, sequence, sequenceIndex+1)
+}
+
 func compareSlices(a []int, b []int) bool {
 	if a == nil || b == nil {
 		return false
