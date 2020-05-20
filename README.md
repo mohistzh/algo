@@ -21,7 +21,7 @@
 
 [**Tree Depth First Search**](https://github.com/mohistzh/algo/tree/master/tdfs)
 
-**Two Heaps**
+[**Two Heaps**](https://github.com/mohistzh/algo/tree/master/twoheaps)
 
 **Subsets**
 
