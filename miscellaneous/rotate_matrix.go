@@ -20,8 +20,10 @@ rotate the input matrix in-place such that it becomes:
   [8,5,2],
   [9,6,3]
 ]
+
+direction: 1. clockwise direction.   2. anti-clockwise direction
 */
-func rotateMatrix(matrix [][]int) {
+func rotateMatrix(matrix [][]int, direction int) {
 	fmt.Println(matrix)
 }
 
@@ -31,5 +33,5 @@ func main() {
 		{4, 5, 6},
 		{7, 8, 9},
 	}
-	rotateMatrix(matrix)
+	rotateMatrix(matrix, 1)
 }
