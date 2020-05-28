@@ -39,6 +39,7 @@ func indexOf(S string, W string) int {
 
 }
 
+// O(m*n) solution, which m is the length of text, and n is the length of pattern
 func bfSolution(text string, pattern string) int {
 	if pattern == "" {
 		return -1
