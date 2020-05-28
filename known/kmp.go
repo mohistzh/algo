@@ -39,6 +39,30 @@ func indexOf(S string, W string) int {
 
 }
 
+/*
+	Use aux[] to store the index. Unlike naive solution, where we shift the world W by one and
+	compare all characters at each shift, we use a value from aux[] to dicide the next characters
+	to be matched. No need to match characters that we know will match anyway.
+*/
+func createAux(W string) []int {
+	aux := make([]int, len(W))
+	index := 1
+	m := 0
+	for index < len(W) {
+		if W[index] == W[m] {
+			m++
+			aux[index] = m
+			index++
+		} else if W[index] != W[m] && m != 0 {
+			m = aux[m-1]
+		} else {
+			aux[index] = 0
+			index++
+		}
+	}
+	return aux
+}
+
 // O(m*n) solution, which m is the length of text, and n is the length of pattern
 func bfSolution(text string, pattern string) int {
 	if pattern == "" {
