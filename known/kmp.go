@@ -1,6 +1,10 @@
 // Knuth-Morris-Pratt algorithm, also known as 'The needle in a haystack'
 package main
 
+import (
+	"fmt"
+)
+
 /*
 In computer science, the Knuth–Morris–Pratt string-searching algorithm (or KMP algorithm)
 searches for occurrences of a "word" W within a main "text string" S by employing the observation that when a mismatch occurs,
@@ -35,6 +39,34 @@ func indexOf(S string, W string) int {
 
 }
 
-func main() {
+func bfSolution(text string, pattern string) int {
+	if pattern == "" {
+		return -1
+	}
+	textLen := len(text)
+	patternLen := len(pattern)
 
+	index := 0
+
+	for index < (textLen - patternLen + 1) {
+		match := true
+		// internal interval
+		for i := 0; i < patternLen; i++ {
+			if pattern[i] != text[index+i] {
+				match = false
+				break
+			}
+		}
+		if match {
+			return index
+		}
+		index++
+	}
+	return -1
+}
+
+func main() {
+	text := "doyouseeadoghere"
+	pattern := "dog"
+	fmt.Println("We found occurrence is:", bfSolution(text, pattern))
 }
