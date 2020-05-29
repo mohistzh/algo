@@ -46,7 +46,9 @@ func indexOf(S string, W string) int {
 */
 func createAux(W string) []int {
 	aux := make([]int, len(W))
+	// current index to be processed
 	index := 1
+	// index of the cell before which prefix is equal to the suffix
 	m := 0
 	for index < len(W) {
 		if W[index] == W[m] {
