@@ -20,22 +20,25 @@ func indexOf(S string, W string) int {
 	if len(W) < 1 {
 		return 0
 	}
-	// indexOfS is the position of current character in S
-	// indexOfW is the position of current character in W
-	indexOfS, indexOfW, result := 0, 0, 0
+	aux := createAux(W)
+	// countOfW is counter for word W, indexOfS is counter for next S
+	countOfW, indexOfS := 0, 0
 	for indexOfS < len(S) {
-		if W[indexOfW] == S[indexOfS] {
-			indexOfS++
-			indexOfW++
-			if indexOfW == len(W) {
-
+		if W[countOfW] != S[indexOfS] {
+			if countOfW == 0 {
+				indexOfS++
+			} else {
+				countOfW = aux[countOfW-1]
 			}
 		} else {
-
+			countOfW++
+			indexOfS++
+			if countOfW == len(W) {
+				return indexOfS - countOfW
+			}
 		}
 	}
-
-	return result
+	return -1
 
 }
 
@@ -51,6 +54,7 @@ func createAux(W string) []int {
 	// index of the cell before which prefix is equal to the suffix
 	m := 0
 	for index < len(W) {
+		// prefix = suffix till m-1
 		if W[index] == W[m] {
 			m++
 			aux[index] = m
@@ -96,4 +100,7 @@ func main() {
 	text := "doyouseeadoghere"
 	pattern := "dog"
 	fmt.Println("We found occurrence is:", bfSolution(text, pattern))
+
+	fmt.Println("We found occurrence is :", indexOf(text, pattern))
+	fmt.Println("We found occurrence is :", indexOf("bacbababaabcbab", "abababca"))
 }
