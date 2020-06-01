@@ -32,7 +32,7 @@ func findPalindrome(head *SinglyNode) bool {
 		headSecondHalf = headSecondHalf.next
 	}
 	reverse(copyOfHeadSecondHalf)
-	if curHead == nil && headSecondHalf == nil {
+	if headSecondHalf == nil {
 		return true
 	}
 	return false
