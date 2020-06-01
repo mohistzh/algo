@@ -58,4 +58,7 @@ func main() {
 	fmt.Println(findPalindrome(&head))
 	head.next.next.next.next.next = &SinglyNode{value: 2}
 	fmt.Println(findPalindrome(&head))
+	head = SinglyNode{value: 0}
+	head.next = &SinglyNode{value: 0}
+	fmt.Println(findPalindrome(&head))
 }
