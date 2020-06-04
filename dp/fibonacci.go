@@ -25,8 +25,30 @@ func memoization(n int, memoize []int) int {
 	return memoize[n]
 }
 
+func fibDP2(n int) int {
+	return tabulation(n)
+}
+func tabulation(n int) int {
+	if n == 0 {
+		return 0
+	}
+	dp := make([]int, n+1)
+	dp[0] = 0
+	dp[1] = 1
+	for i := 2; i <= n; i++ {
+		dp[i] = dp[i-1] + dp[i-2]
+	}
+	return dp[n]
+}
+
 func main() {
+	fmt.Println("Memoization Approach")
 	fmt.Println("5th Fibonacci is:", fibDP1(5))
 	fmt.Println("6th Fibonacci is:", fibDP1(6))
 	fmt.Println("7th Fibonacci is:", fibDP1(7))
+	fmt.Println("Tabulation Approach")
+	fmt.Println("5th Fibonacci is:", fibDP2(5))
+	fmt.Println("6th Fibonacci is:", fibDP2(6))
+	fmt.Println("7th Fibonacci is:", fibDP2(7))
+
 }
