@@ -25,6 +25,14 @@ func memoization(n int, memoize []int) int {
 	return memoize[n]
 }
 
+/*
+	Tabulation is opposite of the top-down approach and avoids recursion. In this approach, we solve the problem "bottom-up"
+	(i.e. by solving all the related subproblems first). This is typically done by filling up an n-dimensional table.
+	Based on the results in the table, the solution to the top/original problem is then computed.
+
+	Tabulation is the opposite of Memoization, as in Memoization we solve the problem and maintain a map of already solved subproblems.
+	In other words, in memoization, we do it top-down in the sense that we solve the top problem first(which typically recurses down to solve the subproblems).
+*/
 func fibDP2(n int) int {
 	return tabulation(n)
 }
