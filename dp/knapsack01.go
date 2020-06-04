@@ -5,6 +5,7 @@ package main
 */
 import (
 	"fmt"
+	"math"
 )
 
 // KnapsackNaiveSolution Brute-force solution which recursive all passible value
@@ -19,6 +20,35 @@ func KnapsackNaiveSolution(capacity int, weight []int, value []int, n int) int {
 		KnapsackNaiveSolution(capacity-weight[n-1], weight, value, n-1),
 		KnapsackNaiveSolution(capacity, weight, value, n-1),
 	)
+
+}
+
+// KnapsackMemoizationSolution Top-down DP with Memoization
+func KnapsackMemoizationSolution(capacity int, weight []int, value []int) int {
+	memo := make([][]int, len(value))
+	for i := 0; i < len(value); i++ {
+		memo[i] = make([]int, capacity+1)
+	}
+	return knapsackMemoization(memo, weight, value, capacity, 0)
+}
+
+func knapsackMemoization(memo [][]int, weight []int, value []int, capacity int, currentIndex int) int {
+	// base condition
+	if capacity <= 0 || currentIndex >= len(weight) {
+		return 0
+	}
+	// memoization
+	if memo[currentIndex][capacity] != 0 {
+		return memo[currentIndex][capacity]
+	}
+	profitA := 0
+	if weight[currentIndex] <= capacity {
+		profitA = value[currentIndex] + knapsackMemoization(memo, weight, value, capacity-weight[currentIndex], currentIndex+1)
+	}
+
+	profitB := knapsackMemoization(memo, weight, value, capacity, currentIndex+1)
+	memo[currentIndex][capacity] = int(math.Max(float64(profitA), float64(profitB)))
+	return memo[currentIndex][capacity]
 
 }
 
@@ -40,7 +70,6 @@ func KnapsackDPSolution(capacity int, weight []int, value []int, n int) int {
 
 		}
 	}
-	fmt.Println(dp)
 	return dp[n][capacity]
 
 }
@@ -57,5 +86,8 @@ func main() {
 	res := KnapsackNaiveSolution(capacity, weight, value, len(value))
 	fmt.Println(res)
 	res = KnapsackDPSolution(capacity, weight, value, len(value))
+	fmt.Println(res)
+
+	res = KnapsackMemoizationSolution(capacity, weight, value)
 	fmt.Println(res)
 }
