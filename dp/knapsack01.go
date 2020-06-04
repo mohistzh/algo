@@ -7,19 +7,22 @@ import (
 	"fmt"
 )
 
+// KnapsackNaiveSolution Brute-force solution which recursive all passible value
 func KnapsackNaiveSolution(capacity int, weight []int, value []int, n int) int {
 	if n == 0 || capacity == 0 {
 		return 0
 	}
 	if weight[n-1] > capacity {
 		return KnapsackNaiveSolution(capacity, weight, value, n-1)
-	} else {
-		return max(value[n-1]+
-			KnapsackNaiveSolution(capacity-weight[n-1], weight, value, n-1),
-			KnapsackNaiveSolution(capacity, weight, value, n-1),
-		)
 	}
+	return max(value[n-1]+
+		KnapsackNaiveSolution(capacity-weight[n-1], weight, value, n-1),
+		KnapsackNaiveSolution(capacity, weight, value, n-1),
+	)
+
 }
+
+//KnapsackDPSolution Dynamic Programming solution
 func KnapsackDPSolution(capacity int, weight []int, value []int, n int) int {
 	dp := make([][]int, n+1)
 	for i := 0; i <= n; i++ {
