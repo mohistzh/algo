@@ -52,6 +52,34 @@ func knapsackMemoization(memo [][]int, weight []int, value []int, capacity int, 
 
 }
 
+// KnapsackTabulationSolution tabulation solution
+func KnapsackTabulationSolution(capacity int, weight []int, profit []int) int {
+	if capacity <= 0 || len(profit) == 0 || len(weight) != len(profit) {
+		return 0
+	}
+	row := len(profit)
+	col := capacity + 1
+	dp := make([][]int, row)
+	for i := 0; i < row; i++ {
+		dp[i] = make([]int, col)
+	}
+
+	for i := 0; i < row; i++ {
+		for j := 0; j < col; j++ {
+			if i == 0 || j == 0 { // just filling in cells
+				dp[i][j] = 0
+			} else if weight[i] <= j { // if capacity is great than weight of staff, it means we can do something
+				dp[i][j] = max(profit[i]+dp[i-1][j-weight[i]], dp[i-1][j])
+			} else {
+				dp[i][j] = dp[i-1][j] // we just inherting the value
+			}
+		}
+	}
+
+	return dp[row-1][col-1]
+
+}
+
 //KnapsackDPSolution Dynamic Programming solution
 func KnapsackDPSolution(capacity int, weight []int, value []int, n int) int {
 	dp := make([][]int, n+1)
@@ -89,5 +117,7 @@ func main() {
 	fmt.Println(res)
 
 	res = KnapsackMemoizationSolution(capacity, weight, value)
+	fmt.Println(res)
+	res = KnapsackTabulationSolution(capacity, weight, value)
 	fmt.Println(res)
 }
