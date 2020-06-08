@@ -43,4 +43,6 @@ func canPartitionRecursive(nums []int, sum int, index int) bool {
 func main() {
 	res := CanPartition([]int{1, 2, 3, 4})
 	fmt.Println(res)
+	res = CanPartition([]int{1, 5, 7})
+	fmt.Println(res)
 }
