@@ -75,9 +75,22 @@ func KnapsackTabulationSolution(capacity int, weight []int, profit []int) int {
 			}
 		}
 	}
-
+	KnapsackPrintTrackedElements(dp, weight, profit, capacity)
 	return dp[row-1][col-1]
 
+}
+
+// KnapsackPrintTrackedElements print selected elements
+func KnapsackPrintTrackedElements(dp [][]int, weight []int, profit []int, capacity int) {
+	totalProfit := dp[len(profit)-1][capacity]
+	for i := len(profit) - 1; i > 0; i-- {
+		if totalProfit != dp[i-1][capacity] {
+			fmt.Println(" ", weight[i])
+			capacity -= weight[i]
+			totalProfit -= profit[i]
+		}
+
+	}
 }
 
 //KnapsackDPSolution Dynamic Programming solution
