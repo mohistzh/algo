@@ -40,9 +40,48 @@ func canPartitionRecursive(nums []int, sum int, index int) bool {
 	return canPartitionRecursive(nums, sum, index-1) || canPartitionRecursive(nums, sum-nums[index-1], index-1)
 }
 
+// CanPartitionTabulationSolution bottom-up solution
+func CanPartitionTabulationSolution(nums []int) bool {
+	sum, n := 0, len(nums)
+	for i := 0; i < n; i++ {
+		sum += nums[i]
+	}
+	if sum%2 != 0 {
+		return false
+	}
+	sum /= 2
+
+	dp := make([][]bool, n)
+	for i := 0; i < n; i++ {
+		dp[i] = make([]bool, sum+1)
+		dp[i][0] = true
+	}
+	// With only one number, we can form a subset only when the required sum is equal to its value
+	for s := 1; s <= sum; s++ {
+		t := true
+		if s != nums[0] {
+			t = false
+		}
+		dp[0][s] = t
+	}
+
+	for r := 1; r < n; r++ {
+		for s := 1; s <= sum; s++ {
+			if dp[r-1][s] {
+				dp[r][s] = dp[r-1][s]
+			} else if s >= nums[r] {
+				dp[r][s] = dp[r-1][s-nums[r]]
+			}
+		}
+	}
+	return dp[n-1][sum]
+}
+
 func main() {
 	res := CanPartition([]int{1, 2, 3, 4})
 	fmt.Println(res)
 	res = CanPartition([]int{1, 5, 7})
+	fmt.Println(res)
+	res = CanPartitionTabulationSolution([]int{1, 2, 3, 4})
 	fmt.Println(res)
 }
