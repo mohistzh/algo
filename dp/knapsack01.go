@@ -80,6 +80,31 @@ func KnapsackTabulationSolution(capacity int, weight []int, profit []int) int {
 
 }
 
+// KnapsackTabulationOptimalSolution overall we need 2 rows(current row and previous row) to find the optimal solution.
+func KnapsackTabulationOptimalSolution(capacity int, weight []int, profit []int) int {
+	if capacity <= 0 || len(profit) == 0 || len(weight) != len(profit) {
+		return 0
+	}
+	row := len(profit)
+	col := capacity + 1
+	dp := make([][]int, 2)
+	for i := 0; i < 2; i++ {
+		dp[i] = make([]int, col)
+	}
+	for i := 0; i < row; i++ {
+		for j := 0; j < col; j++ {
+			if i == 0 || j == 0 {
+				dp[i%2][j] = 0
+			} else if weight[i] <= j {
+				dp[i%2][j] = max(profit[i]+dp[(i-1)%2][j-weight[i]], dp[(i-1)%2][j])
+			} else {
+				dp[i%2][j] = dp[(i-1)%2][j]
+			}
+		}
+	}
+	return dp[(row-1)%2][col-1]
+}
+
 // KnapsackPrintTrackedElements print selected elements
 func KnapsackPrintTrackedElements(dp [][]int, weight []int, profit []int, capacity int) {
 	totalProfit := dp[len(profit)-1][capacity]
@@ -132,5 +157,7 @@ func main() {
 	res = KnapsackMemoizationSolution(capacity, weight, value)
 	fmt.Println(res)
 	res = KnapsackTabulationSolution(capacity, weight, value)
+	fmt.Println(res)
+	res = KnapsackTabulationOptimalSolution(capacity, weight, value)
 	fmt.Println(res)
 }
