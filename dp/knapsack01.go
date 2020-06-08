@@ -81,6 +81,7 @@ func KnapsackTabulationSolution(capacity int, weight []int, profit []int) int {
 }
 
 // KnapsackTabulationOptimalSolution overall we need 2 rows(current row and previous row) to find the optimal solution.
+// Space complexity is O(capacity)
 func KnapsackTabulationOptimalSolution(capacity int, weight []int, profit []int) int {
 	if capacity <= 0 || len(profit) == 0 || len(weight) != len(profit) {
 		return 0
