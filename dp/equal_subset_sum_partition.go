@@ -77,11 +77,49 @@ func CanPartitionTabulationSolution(nums []int) bool {
 	return dp[n-1][sum]
 }
 
+// CanPartitionMemoization memoization solution
+func CanPartitionMemoization(nums []int) bool {
+	total := 0
+	for i := 0; i < len(nums); i++ {
+		total += nums[i]
+	}
+	if total%2 != 0 {
+		return false
+	}
+	memo := make(map[string]bool)
+	return canPartitionMemoization(nums, 0, 0, total, memo)
+}
+
+func canPartitionMemoization(nums []int, index int, sum int, total int, memo map[string]bool) bool {
+
+	current := fmt.Sprint(index, "", sum)
+	if _, ok := memo[current]; ok {
+		return memo[current]
+	}
+
+	// base cases
+	if sum == total/2 {
+		return true
+	}
+	if sum > total || index >= len(nums) {
+		return false
+	}
+	state := canPartitionMemoization(nums, index+1, sum, total, memo) || canPartitionMemoization(nums, index+1, sum+nums[index], total, memo)
+	memo[current] = state
+	return memo[current]
+
+}
+
 func main() {
 	res := CanPartition([]int{1, 2, 3, 4})
 	fmt.Println(res)
 	res = CanPartition([]int{1, 5, 7})
 	fmt.Println(res)
 	res = CanPartitionTabulationSolution([]int{1, 2, 3, 4})
+	fmt.Println(res)
+
+	res = CanPartitionMemoization([]int{1, 2, 3, 4})
+	fmt.Println(res)
+	res = CanPartitionMemoization([]int{1, 2, 3, 5})
 	fmt.Println(res)
 }
