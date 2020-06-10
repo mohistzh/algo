@@ -23,6 +23,34 @@ func KnapsackNaiveSolution(capacity int, weight []int, value []int, n int) int {
 
 }
 
+// KnapsackNaiveSolution2 another naive solution
+func KnapsackNaiveSolution2(capacity int, weight []int, profit []int) int {
+	if capacity <= 0 || len(weight) != len(profit) {
+		return 0
+	}
+	memo := make(map[string]int)
+	return naiveSolution2(capacity, weight, profit, 0, memo)
+}
+func naiveSolution2(capacity int, weight []int, profit []int, currentIndex int, memo map[string]int) int {
+
+	current := fmt.Sprint(capacity, "", currentIndex)
+	if _, ok := memo[current]; ok {
+		return memo[current]
+	}
+
+	// base cases
+	if capacity <= 0 || currentIndex >= len(weight) {
+		return 0
+	}
+	profit1 := 0
+	if weight[currentIndex] <= capacity {
+		profit1 = profit[currentIndex] + naiveSolution2(capacity-weight[currentIndex], weight, profit, currentIndex+1, memo)
+	}
+	profit2 := naiveSolution2(capacity, weight, profit, currentIndex+1, memo)
+	memo[current] = int(math.Max(float64(profit1), float64(profit2)))
+	return memo[current]
+}
+
 // KnapsackMemoizationSolution Top-down DP with Memoization
 func KnapsackMemoizationSolution(capacity int, weight []int, value []int) int {
 	memo := make([][]int, len(value))
@@ -160,5 +188,9 @@ func main() {
 	res = KnapsackTabulationSolution(capacity, weight, value)
 	fmt.Println(res)
 	res = KnapsackTabulationOptimalSolution(capacity, weight, value)
+	fmt.Println(res)
+
+	fmt.Println("More solution")
+	res = KnapsackNaiveSolution2(capacity, weight, value)
 	fmt.Println(res)
 }
