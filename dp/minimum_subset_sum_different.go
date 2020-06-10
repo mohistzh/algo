@@ -51,8 +51,8 @@ func MinimumSubSetSumDifferentTabulation(nums []int) int {
 	for i := 0; i < n; i++ {
 		total += nums[i]
 	}
-	dp := make([][]bool, n)
-	for i := 0; i < n; i++ {
+	dp := make([][]bool, 2)
+	for i := 0; i < 2; i++ {
 		dp[i] = make([]bool, total/2+1)
 		dp[i][0] = true
 	}
@@ -66,16 +66,16 @@ func MinimumSubSetSumDifferentTabulation(nums []int) int {
 	}
 	for i := 1; i < n; i++ {
 		for s := 1; s <= total/2; s++ {
-			if dp[i-1][s] {
-				dp[i][s] = dp[i-1][s]
+			if dp[(i-1)%2][s] {
+				dp[i%2][s] = dp[(i-1)%2][s]
 			} else if s >= nums[i] {
-				dp[i][s] = dp[i-1][s-nums[i]]
+				dp[i%2][s] = dp[(i-1)%2][s-nums[i]]
 			}
 		}
 	}
 	sum1 := 0
 	for i := total / 2; i >= 0; i-- {
-		if dp[n-1][i] {
+		if dp[(n-1)%2][i] {
 			sum1 = i
 			break
 		}
