@@ -2,7 +2,7 @@
 
 ## DP offers two methods to solve problem.
 
-### Top-down with Memoization**
+### Top-down with Memoization
 
 In this approach, we try to solve the bigger problem by recursively finding the solution to smaller sub-problems. Whenever we solve a sub-problem, we **cache its result** so that we don't end up solving it repeatedly if it's called multiple times. Instead, we can just return the saved result. This technique of storing the results of already solved sub-problems is called **Memoization.**
 
