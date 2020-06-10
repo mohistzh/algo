@@ -44,6 +44,47 @@ func minimumSubSetSumDifferentMemoization(nums []int, index int, sum1 int, sum2 
 	return memo[current]
 }
 
+// MinimumSubSetSumDifferentTabulation  bottom-up solution
+func MinimumSubSetSumDifferentTabulation(nums []int) int {
+	n := len(nums)
+	total := 0
+	for i := 0; i < n; i++ {
+		total += nums[i]
+	}
+	dp := make([][]bool, n)
+	for i := 0; i < n; i++ {
+		dp[i] = make([]bool, total/2+1)
+		dp[i][0] = true
+	}
+
+	for s := 1; s <= total/2; s++ {
+		state := false
+		if nums[0] == s {
+			state = true
+		}
+		dp[0][s] = state
+	}
+	for i := 1; i < n; i++ {
+		for s := 1; s <= total/2; s++ {
+			if dp[i-1][s] {
+				dp[i][s] = dp[i-1][s]
+			} else if s >= nums[i] {
+				dp[i][s] = dp[i-1][s-nums[i]]
+			}
+		}
+	}
+	sum1 := 0
+	for i := total / 2; i >= 0; i-- {
+		if dp[n-1][i] {
+			sum1 = i
+			break
+		}
+	}
+	sum2 := total - sum1
+	return intAbs(sum1 - sum2)
+
+}
+
 // lazy to convert data type
 func intAbs(x int) int {
 	if x < 0 {
@@ -53,13 +94,23 @@ func intAbs(x int) int {
 }
 
 func main() {
+	fmt.Println("Naive solution")
 	res := MinimumSubSetSumDifferent([]int{1, 2, 3, 9})
-	fmt.Println(res)
+	fmt.Println("{1, 2, 3, 9}", res)
 	res = MinimumSubSetSumDifferent([]int{1, 3, 100, 4})
-	fmt.Println(res)
+	fmt.Println("{1, 3, 100, 4}", res)
 
+	fmt.Println()
+	fmt.Println("Memoization solution")
 	res = MinimumSubSetSumDifferentMemoization([]int{1, 2, 3, 9})
-	fmt.Println(res)
+	fmt.Println("{1, 2, 3, 9}s", res)
 	res = MinimumSubSetSumDifferentMemoization([]int{1, 3, 100, 4})
-	fmt.Println(res)
+	fmt.Println("{1, 3, 100, 4}", res)
+
+	fmt.Println()
+	fmt.Println("Tabulation solution")
+	res = MinimumSubSetSumDifferentTabulation([]int{1, 2, 3, 9})
+	fmt.Println("{1, 2, 3, 9}", res)
+	res = MinimumSubSetSumDifferentTabulation([]int{1, 3, 100, 4})
+	fmt.Println("{1, 3, 100, 4}", res)
 }
