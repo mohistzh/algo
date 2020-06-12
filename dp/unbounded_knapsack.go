@@ -12,19 +12,25 @@ import (
 	of an item.
 */
 func solveUnboundedKnapsack(profits []int, weights []int, capacity int) int {
-	return unboundedKnapsackRecursive(profits, weights, capacity, 0)
+	memo := make(map[string]int)
+	return unboundedKnapsackRecursive(profits, weights, capacity, 0, memo)
 }
-func unboundedKnapsackRecursive(profits []int, weights []int, capacity int, currentIndex int) int {
+func unboundedKnapsackRecursive(profits []int, weights []int, capacity int, currentIndex int, memo map[string]int) int {
+	current := fmt.Sprint(currentIndex, "", capacity)
+	if val, ok := memo[current]; ok {
+		return val
+	}
 	// base conditions
 	if capacity <= 0 || len(profits) == 0 || len(profits) != len(weights) || currentIndex >= len(profits) {
 		return 0
 	}
 	profit1 := 0
 	if weights[currentIndex] <= capacity {
-		profit1 = profits[currentIndex] + unboundedKnapsackRecursive(profits, weights, capacity-weights[currentIndex], currentIndex)
+		profit1 = profits[currentIndex] + unboundedKnapsackRecursive(profits, weights, capacity-weights[currentIndex], currentIndex, memo)
 	}
-	profit2 := unboundedKnapsackRecursive(profits, weights, capacity, currentIndex+1)
-	return int(math.Max(float64(profit1), float64(profit2)))
+	profit2 := unboundedKnapsackRecursive(profits, weights, capacity, currentIndex+1, memo)
+	memo[current] = int(math.Max(float64(profit1), float64(profit2)))
+	return memo[current]
 }
 
 func main() {
