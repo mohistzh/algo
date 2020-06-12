@@ -16,12 +16,12 @@ func solveUnboundedKnapsack(profits []int, weights []int, capacity int) int {
 }
 func unboundedKnapsackRecursive(profits []int, weights []int, capacity int, currentIndex int) int {
 	// base conditions
-	if currentIndex <= 0 || len(profits) == 0 || len(profits) != len(weights) || currentIndex >= len(profits) {
+	if capacity <= 0 || len(profits) == 0 || len(profits) != len(weights) || currentIndex >= len(profits) {
 		return 0
 	}
 	profit1 := 0
 	if weights[currentIndex] <= capacity {
-		profit1 = profits[currentIndex] + unboundedKnapsackRecursive(profits, weights, capacity-weights[currentIndex], currentIndex+1)
+		profit1 = profits[currentIndex] + unboundedKnapsackRecursive(profits, weights, capacity-weights[currentIndex], currentIndex)
 	}
 	profit2 := unboundedKnapsackRecursive(profits, weights, capacity, currentIndex+1)
 	return int(math.Max(float64(profit1), float64(profit2)))
@@ -31,4 +31,7 @@ func main() {
 	profits := []int{15, 50, 60, 90}
 	weights := []int{1, 3, 4, 5}
 	fmt.Println(solveUnboundedKnapsack(profits, weights, 8))
+	profits = []int{15, 20, 50}
+	weights = []int{1, 2, 3}
+	fmt.Println(solveUnboundedKnapsack(profits, weights, 5))
 }
