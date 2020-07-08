@@ -24,6 +24,24 @@ func houseRobberSolution1(nums []int) int {
 	return maximum
 }
 
+/**
+	DP tabulation solution
+**/
+func houseRobberSolution2(nums []int) int {
+	n := len(nums)
+	if n < 1 {
+		return 0
+	}
+	dp := make([]int, n)
+	dp[0] = nums[0]
+	dp[1] = int(math.Max(float64(nums[0]), float64(nums[1])))
+	for i := 2; i < n; i++ {
+		dp[i] = int(math.Max(float64(dp[i-1]), float64(dp[i-2]+nums[i])))
+	}
+	return dp[n-1]
+
+}
+
 func main() {
 	house1 := []int{
 		1, 2, 3, 1,
@@ -38,4 +56,8 @@ func main() {
 	fmt.Println(houseRobberSolution1(house1))
 	fmt.Println(houseRobberSolution1(house2))
 	fmt.Println(houseRobberSolution1(house3))
+	fmt.Println("------------DP---------------")
+	fmt.Println(houseRobberSolution2(house1))
+	fmt.Println(houseRobberSolution2(house2))
+	fmt.Println(houseRobberSolution2(house3))
 }
