@@ -29,17 +29,37 @@ func maxSubArrayBF(nums []int) int {
 **/
 func kadaneAlgo(nums []int) int {
 
-	maxSofar := -10086 // always catch maximum sum
-	maxEndingHere := 0 // Maximum sum of subarray
+	maximum := -10086 // always catch maximum sum
+	maxSofar := 0 // Maximum sum of subarray
 
 	for i := 0; i < len(nums); i++ {
-		maxEndingHere = int(math.Max(float64(nums[i]), float64(nums[i] + maxEndingHere)))
-		if maxSofar < maxEndingHere {
-			maxSofar = maxEndingHere
+		maxSofar = int(math.Max(float64(nums[i]), float64(nums[i] + maxSofar)))
+		if maximum < maxSofar {
+			maximum = maxSofar
 		}
 
 	}
-	return maxSofar
+	return maximum
+}
+
+func kadaneAlgoPrintIndices(nums []int) int {
+	maximum := -10086
+	maxSofar := 0
+	start, end := 0, 0
+	for i := 0; i < len(nums); i++ {
+		if nums[i] > nums[i] + maxSofar {
+			maxSofar = nums[i]
+			start = i 
+		} else {
+			maxSofar = nums[i] + maxSofar
+		}
+		if maximum < maxSofar {
+			maximum = maxSofar
+			end = i  
+		}
+	}
+	fmt.Println("Maximum subarray index {", start, end, "}")
+	return maximum
 }
 
 func main() {
@@ -48,4 +68,5 @@ func main() {
 	}
 	fmt.Println(maxSubArrayBF(nums))
 	fmt.Println(kadaneAlgo(nums))
+	fmt.Println(kadaneAlgoPrintIndices(nums))
 }
