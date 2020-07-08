@@ -1,6 +1,7 @@
 package main
 import(
 	"fmt"
+	"math"
 )
 /**
 Given an integer array nums, find the contiguous subarray (containing at least one number) which has the largest sum and return its sum.
@@ -28,22 +29,17 @@ func maxSubArrayBF(nums []int) int {
 **/
 func kadaneAlgo(nums []int) int {
 
-	maximumSofar := 0
-	maximumEndingHere := 0
+	maxSofar := -10086 // always catch maximum sum
+	maxEndingHere := 0 // Maximum sum of subarray
 
 	for i := 0; i < len(nums); i++ {
-		if nums[i] > nums[i] + maximumEndingHere {
-			maximumEndingHere = nums[i]
-		} else {
-			maximumEndingHere = nums[i] + maximumEndingHere
-
-			if maximumEndingHere > maximumSofar {
-				maximumSofar = maximumEndingHere
-			}
+		maxEndingHere = int(math.Max(float64(nums[i]), float64(nums[i] + maxEndingHere)))
+		if maxSofar < maxEndingHere {
+			maxSofar = maxEndingHere
 		}
 
 	}
-	return maximumSofar
+	return maxSofar
 }
 
 func main() {
