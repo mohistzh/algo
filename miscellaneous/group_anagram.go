@@ -1,6 +1,10 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"sort"
+	"strings"
+)
 
 /*
 	Given an array of strings, group anagrams together.
@@ -10,11 +14,37 @@ import "fmt"
 	2. The order of your output does not matter.
 */
 func groupAnagrams(input []string) [][]string {
+	auxMap := make(map[string][]string)
 	var result [][]string
+	for i := 0; i < len(input); i++ {
+		str := input[i]
+		key := sortString(str)
+		if val, ok := auxMap[key]; ok {
+			val = append(val, str)
+			auxMap[key] = val
+		} else {
+			auxMap[key] = []string{str}
+		}
+	}
 
+	for _, v := range auxMap {
+		result = append(result, v)
+	}
 	return result
 }
 
+func sortString(str string) string {
+	arr := strings.Split(str, "")
+	sort.Strings(arr)
+	return strings.Join(arr, "")
+}
+
+/*
+	0. iterate the array one-time
+	1. sorting each item
+	2. use sorted item as map key to store anagrams
+
+*/
 func main() {
 	sample1 := []string{
 		"eat", "tea", "tan", "ate", "nat", "bat",
