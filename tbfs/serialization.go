@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"fmt"
 	"strconv"
+	"strings"
 )
 
 //MyTreeNode11 simple tree struct
@@ -34,7 +35,27 @@ func _preorderSerialize(root *MyTreeNode11, buf *bytes.Buffer) {
 
 // preorderDeserialize deserialize the given string to a Tree
 func preorderDeserialize(serialized string) *MyTreeNode11 {
-	return nil
+	nodes := strings.Split(serialized, ",")
+	fmt.Println(nodes)
+	return _preorderDeserialize(nodes)
+}
+func _preorderDeserialize(nodes []string) *MyTreeNode11 {
+	if len(nodes) < 1 {
+		return nil
+	}
+	first := nodes[0]
+	nodes = nodes[1:]
+	if first == "#" || first == "" {
+		return nil
+	}
+	val, err := strconv.Atoi(first)
+	if err != nil {
+		return nil
+	}
+	root := &MyTreeNode11{value: val}
+	root.left = _preorderDeserialize(nodes)
+	root.right = _preorderDeserialize(nodes)
+	return root
 }
 
 func main() {
@@ -43,5 +64,8 @@ func main() {
 	root.right = &MyTreeNode11{value: 3}
 	root.left.right = &MyTreeNode11{value: 4}
 	serializedStr := preorderSerialize(root)
+	fmt.Println(serializedStr)
+	node := preorderDeserialize(serializedStr)
+	fmt.Println(node)
 	fmt.Println(serializedStr)
 }
