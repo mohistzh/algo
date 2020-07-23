@@ -15,22 +15,21 @@ type MyTreeNode11 struct {
 // preorderSerialize serialize the given tree node to a string by PreOrder traversal
 func preorderSerialize(root *MyTreeNode11) string {
 	var buf bytes.Buffer
-	buf = _preorderSerialize(root, buf)
+	_preorderSerialize(root, &buf)
 	return buf.String()
 }
 
 // preorderSerialize serialize the given tree node to a string by PreOrder traversal
-func _preorderSerialize(root *MyTreeNode11, buf bytes.Buffer) bytes.Buffer {
+func _preorderSerialize(root *MyTreeNode11, buf *bytes.Buffer) {
 	if root == nil {
 		buf.WriteString("#")
 		buf.WriteString(",")
-		return buf
+		return
 	}
 	buf.WriteString(strconv.Itoa(root.value))
 	buf.WriteString(",")
 	_preorderSerialize(root.left, buf)
 	_preorderSerialize(root.right, buf)
-	return buf
 }
 
 // preorderDeserialize deserialize the given string to a Tree
